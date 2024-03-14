@@ -3,10 +3,12 @@ package com.lucatic.grupo2.app.model.adapter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.lucatic.grupo2.app.model.EnumPriceRange;
+import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
 import org.slf4j.Logger;
@@ -31,12 +33,15 @@ public class EventAdapter {
 		eventResponse.setDate(event.getDate());
 		eventResponse.setTime(event.getTime());
 		eventResponse.setRules(event.getRules());
-		eventResponse.setRoomList(event.getRooms());
+		for (EventRoom er: event.getEventRooms()) {
+			eventResponse.addRoom(er.getRoom());
+		}
 		eventResponse.setError(false);
 		return eventResponse;
 	}
 
 	public Event fromEventRequest(EventRequest eventRequest, List<Room> rooms) {
+
 
 		Event event = new Event();
 		event.setId(eventRequest.getId());
@@ -49,10 +54,18 @@ public class EventAdapter {
 		event.setPrice(EnumPriceRange.valueOf(eventRequest.getPrice()));
 		event.setRules(eventRequest.getRules());
 
-		event.setRooms(rooms);
+		List<EventRoom> eventRooms = new ArrayList<>();
+		for (Room roomFor: rooms) {
+			EventRoom eventRoomResult = new EventRoom(event, roomFor);
+			roomFor.setEventRoom(eventRoomResult);
+			eventRooms.add(eventRoomResult);
+		}
+
+		event.setEventRooms(eventRooms);
+		/*event.setRooms(rooms);
 		for (Room r: rooms) {
 			r.setEvent(event);
-		}
+		}*/
 		return event;
 	}
 	/*

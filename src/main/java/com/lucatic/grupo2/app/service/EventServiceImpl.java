@@ -3,10 +3,12 @@ package com.lucatic.grupo2.app.service;
 import com.lucatic.grupo2.app.exceptions.EmptyListException;
 import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Event;
+import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
 import com.lucatic.grupo2.app.model.adapter.EventAdapter;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
 import com.lucatic.grupo2.app.repository.EventRepository;
+import com.lucatic.grupo2.app.repository.EventRoomRepository;
 import com.lucatic.grupo2.app.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,9 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private EventRoomRepository eventRoomRepository;
 
     @Autowired
     private EventAdapter eventAdapter;
@@ -65,11 +70,19 @@ public class EventServiceImpl implements EventService {
             Room roomFound = roomRepository.findRoomByNameAndAddress(r.getName(), r.getAddress());
             if (roomFound == null) {
                 roomFound = new Room(r.getName(), r.getCity(), r.getAddress(), r.getRoomType(), r.getCapacity());
+                roomRepository.save(roomFound);
             }
             rooms.add(roomFound);
         }
 
+
+
+
         Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
+
+        for (EventRoom eventRoomAux: event.getEventRooms()) {
+            eventRoomAux.setEvent(event);
+        }
         eventRepository.save(event);
 /*
         Event createEvent = new Event(
