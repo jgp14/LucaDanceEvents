@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EventService {
 
-    List<Event> findAll();
+    List<Event> findAll() throws EmptyListException;
     Event findById(Long id);
     Event update(Event event);
     void deleteById(Long id);
