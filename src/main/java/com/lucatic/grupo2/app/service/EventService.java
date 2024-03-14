@@ -1,5 +1,7 @@
 package com.lucatic.grupo2.app.service;
 
+import com.lucatic.grupo2.app.exceptions.EmptyListException;
+import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Event;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
 
@@ -11,5 +13,5 @@ public interface EventService {
     Event findById(Long id);
     Event update(Event event);
     void deleteById(Long id);
-    Event save(EventRequest event);
+    Event save(EventRequest event) throws EventExistException;
 }

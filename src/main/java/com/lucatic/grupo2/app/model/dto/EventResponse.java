@@ -39,12 +39,5 @@ public class EventResponse implements Serializable {
 	private LocalTime time;
 	private String rules;
 	private List<Room> roomList;
-	private String roomAddress;
-	private Long idRoom;
 	private boolean isError;
-
-	
-
-
-
 }

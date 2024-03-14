@@ -1,11 +1,13 @@
 package com.lucatic.grupo2.app.model.dto;
 
+import com.lucatic.grupo2.app.model.Room;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,8 +24,10 @@ public class EventRequest {
     private String price;
     private String rules;
     private String roomName;
-    private String roomAddress;
-    private String roomCity;
-    private Integer roomCapacity;
-    private String roomType;
+    private List<Room> rooms;
+//
+//    private String roomAddress;
+//    private String roomCity;
+//    private Integer roomCapacity;
+//    private String roomType;
 }
