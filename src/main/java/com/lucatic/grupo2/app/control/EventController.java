@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,22 @@ class EventController {
 		} catch (EventExistException e) {
             		LOGGER.warn("Error dando de alta el juego " + e.getMessage());
             		throw e;
-        	}
+        }
+		@GetMapping("/all")
+	    public ResponseEntity<?> listAll()throws EmptyListException {
+	        return productAdapter.convertToDto(productService.getAll());
+	        try {
+				List<Event>= eventService.listAll();
+				URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()
+						.toUri();
+				LOGGER.info("Event " + event.getName() + " with id " + event.getId() + " has been created");
+				return ResponseEntity.created(location).build();
+
+			} catch (EventExistException e) {
+	            		LOGGER.warn("Error dando de alta el juego " + e.getMessage());
+	            		throw e;
+	        }
+	    }
 	}
+
 }
