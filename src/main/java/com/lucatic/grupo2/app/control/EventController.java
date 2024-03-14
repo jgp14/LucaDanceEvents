@@ -2,6 +2,11 @@ package com.lucatic.grupo2.app.control;
 
 import java.net.URI;
 
+import com.lucatic.grupo2.app.model.Event;
+import com.lucatic.grupo2.app.service.EventService;
+import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +21,8 @@ import com.lucatic.grupo2.app.exceptions.EventExistException;
 @RequestMapping("/event")
 class EventController {
 
+	private final static Logger LOGGER = LogManager.getLogger(EventController.class);
+
 	@Autowired
 	private EventService eventService;
 
@@ -27,8 +34,7 @@ class EventController {
 
 		try {
 			Event event= eventService.save(eventRequest);
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
 			LOGGER.info("Event " + event.getName() + " with id " + event.getId() + " has been created");
 			return ResponseEntity.created(location).build();
 
