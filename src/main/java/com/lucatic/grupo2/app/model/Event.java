@@ -33,4 +33,18 @@ public class Event {
     private EnumPriceRange price;
     private String rules;
 
+    public Event(String name, String shortDescription, String longDescription, String photo, LocalDate date, LocalTime time, EnumPriceRange price, String rules) {
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
+        this.photo = photo;
+        this.date = date;
+        this.time = time;
+        this.price = price;
+        this.rules = rules;
+    }
+
+    public void addRoom(Room room) {
+        rooms.add(room);
+    }
 }

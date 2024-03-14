@@ -3,6 +3,7 @@ package com.lucatic.grupo2.app.control;
 import java.net.URI;
 
 import com.lucatic.grupo2.app.model.Event;
+import com.lucatic.grupo2.app.model.dto.EventRequest;
 import com.lucatic.grupo2.app.service.EventService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
