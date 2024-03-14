@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.lucatic.grupo2.app.model.Event;
+import com.lucatic.grupo2.app.model.dto.EventResponse;
 import com.lucatic.grupo2.app.service.EmptyListException;
 import com.lucatic.grupo2.app.service.EventService;
 import jakarta.validation.Valid;
