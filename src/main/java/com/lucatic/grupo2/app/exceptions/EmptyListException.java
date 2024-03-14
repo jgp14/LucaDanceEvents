@@ -1,4 +1,4 @@
-package com.lucatic.grupo2.app.service;
+package com.lucatic.grupo2.app.exceptions;
 
 public class EmptyListException extends Exception {
 

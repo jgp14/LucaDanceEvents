@@ -3,6 +3,7 @@ package com.lucatic.grupo2.app.model.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,13 +39,10 @@ public class EventResponse implements Serializable {
 	private LocalDate date;
 	private LocalTime time;
 	private String rules;
-	private List<Room> roomList;
-	private String roomAddress;
-	private Long idRoom;
+	private List<Room> roomList = new ArrayList<>();
 	private boolean isError;
 
-	
-
-
-
+	public void addRoom(Room room) {
+		roomList.add(room);
+	}
 }
