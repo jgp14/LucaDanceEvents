@@ -25,4 +25,12 @@ public class Room {
     private String address;
     private String roomType;
     private Integer capacity;
+
+    public Room(String name, String city, String address, String roomType, Integer capacity) {
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.roomType = roomType;
+        this.capacity = capacity;
+    }
 }
