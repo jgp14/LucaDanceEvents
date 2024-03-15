@@ -53,4 +53,23 @@ public class Room {
 	 * Atributo con el numero de afr¡oro maxima de la sala
 	 */
 	private Integer capacity;
+
+	/**
+	 * Constuctor personalidado 
+	 * @param name de la sala
+	 * @param city de la sala
+	 * @param address de la sala
+	 * @param roomType de la sala
+	 * @param capacity de la sala
+	 */
+	public Room(String name, String city, String address, String roomType, Integer capacity) {
+		super();
+		this.name = name;
+		this.city = city;
+		this.address = address;
+		this.roomType = roomType;
+		this.capacity = capacity;
+	}
+	
+	
 }
