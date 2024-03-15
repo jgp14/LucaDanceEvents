@@ -3,7 +3,15 @@ package com.lucatic.grupo2.app.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "event_room")
 public class EventRoom {
@@ -20,41 +28,12 @@ public class EventRoom {
     @JsonManagedReference
     private Room room;
 
-    public EventRoom() {
-    }
-
     public EventRoom(Event event, Room room) {
         this.event = event;
         this.room = room;
     }
 
-    public EventRoom(Long id, Event event, Room room) {
-        this.id = id;
+    public EventRoom(Event event) {
         this.event = event;
-        this.room = room;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
     }
 }
