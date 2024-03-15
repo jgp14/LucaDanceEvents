@@ -55,9 +55,9 @@ public class EventResponse implements Serializable {
 	private String rules;
 
 
-	private LocalDate initDate;
-	private LocalDate endDate;
-	private LocalTime timeOpen;
+	private String initDate;
+	private String endDate;
+	private String timeOpen;
 	
 	/**
 	 * Atributo List<RoomResponse> con la lista de salas del evento

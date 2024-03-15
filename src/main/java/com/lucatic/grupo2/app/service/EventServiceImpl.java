@@ -7,6 +7,7 @@ import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
 import com.lucatic.grupo2.app.model.adapter.EventAdapter;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
+import com.lucatic.grupo2.app.model.dto.RoomRequest;
 import com.lucatic.grupo2.app.repository.EventRepository;
 import com.lucatic.grupo2.app.repository.EventRoomRepository;
 import com.lucatic.grupo2.app.repository.RoomRepository;
@@ -66,10 +67,10 @@ public class EventServiceImpl implements EventService {
 
         List<Room> rooms = new ArrayList<>();
 
-        for (Room r: eventRequest.getRooms()) {
-            Room roomFound = roomRepository.findRoomByNameAndAddress(r.getName(), r.getAddress());
+        for (RoomRequest roomRequest: eventRequest.getRoomRequests()) {
+            Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getRoom().getName(), roomRequest.getRoom().getAddress());
             if (roomFound == null) {
-                roomFound = new Room(r.getName(), r.getCity(), r.getAddress(), r.getRoomType(), r.getCapacity());
+                roomFound = new Room(roomRequest.getRoom().getName(),roomRequest.getRoom().getCity(), roomRequest.getRoom().getAddress(), roomRequest.getRoom().getRoomType(), roomRequest.getRoom().getCapacity());
                 roomRepository.save(roomFound);
             }
             rooms.add(roomFound);
