@@ -85,6 +85,9 @@ public class EventRequest {
 	 */
     private String endTime;
 
+    private String initDate;
+    private String endDate;
+
 //
 //    private String roomAddress;
 //    private String roomCity;

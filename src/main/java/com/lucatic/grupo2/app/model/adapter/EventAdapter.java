@@ -90,7 +90,7 @@ public class EventAdapter {
 		event.setShortDescription(eventRequest.getShortDescription());
 		event.setLongDescription(eventRequest.getLongDescription());
 		event.setPhoto(eventRequest.getPhoto());
-		event.setInitDate(LocalDate.parse(eventRequest.getInitTime(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		event.setInitDate(LocalDate.parse(eventRequest.getInitDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		event.setEndDate(LocalDate.parse(eventRequest.getEndDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		event.setTimeOpen(LocalTime.parse(eventRequest.getTimeOpen(), DateTimeFormatter.ofPattern("HH:mm")));
 		event.setPrice(EnumPriceRange.valueOf(eventRequest.getPrice()));
