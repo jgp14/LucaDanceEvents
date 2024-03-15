@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.lucatic.grupo2.app.model.EnumPriceRange;
 import com.lucatic.grupo2.app.model.EventRoom;

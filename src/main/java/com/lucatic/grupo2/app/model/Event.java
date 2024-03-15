@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Clase modelo Entity de Evento para la bbdd, requests y responses. Posee los
- * gettes, settes y constuctores generados por Lombok
+ * getters, setters y constuctores generados por Lombok.
  * 
  * @author BlueDevTeams
  * @version v1.0.0
