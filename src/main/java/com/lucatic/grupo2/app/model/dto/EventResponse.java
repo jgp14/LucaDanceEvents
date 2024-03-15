@@ -57,8 +57,19 @@ public class EventResponse implements Serializable {
 	 */
 	private String rules;
 
+	/**
+	 * Fecha de inicio
+	 */
 	private String initDate;
+
+	/**
+	 * Fecha de fin
+	 */
 	private String endDate;
+
+	/**
+	 * Hora de apertura
+	 */
 	private String timeOpen;
 
 	/**

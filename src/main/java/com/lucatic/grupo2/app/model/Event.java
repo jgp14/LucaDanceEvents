@@ -50,6 +50,7 @@ public class Event {
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
 	private List<EventRoom> eventRooms = new ArrayList<>();
 
+	/** El nombre del evento */
 	private String name;
 	private String shortDescription;
 	private String longDescription;
@@ -61,10 +62,11 @@ public class Event {
 	private EnumPriceRange price;
 	private String rules;
 
-	public Event(Long id) {
-		this.id = id;
-	}
 
+	/**
+	 * Añadir eventroom
+	 * @param eventRoom el event room
+	 */
 	public void addEventRoom(EventRoom eventRoom) {
 		eventRooms.add(eventRoom);
 	}

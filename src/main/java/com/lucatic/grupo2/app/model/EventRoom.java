@@ -88,6 +88,14 @@ public class EventRoom {
         this.endTime = endTime;
     }
 
+    /**
+     * Constructor con parámetros
+     * @param event El evento
+     * @param room La sala
+     * @param date La fecha
+     * @param initTime La hora de inicio
+     * @param endTime la hora de fin
+     */
     public EventRoom(Event event, Room room, LocalDate date, LocalTime initTime, LocalTime endTime) {
         this.event = event;
         this.room = room;
