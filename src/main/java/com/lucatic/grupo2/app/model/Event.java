@@ -49,6 +49,8 @@ public class Event {
 	private EnumPriceRange price;
 	private String rules;
 
+
+
 	public void addEventRoom(EventRoom eventRoom) {
 		eventRooms.add(eventRoom);
 	}
