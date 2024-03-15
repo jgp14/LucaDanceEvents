@@ -86,7 +86,7 @@ class EventController {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(
-                                            implementation = Event.class)
+                                            implementation = EventResponseWithError.class)
                             )
                     }
             ),
