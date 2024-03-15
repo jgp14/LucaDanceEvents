@@ -7,6 +7,7 @@ import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
 import com.lucatic.grupo2.app.model.adapter.EventAdapter;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
+import com.lucatic.grupo2.app.model.dto.RoomRequest;
 import com.lucatic.grupo2.app.repository.EventRepository;
 import com.lucatic.grupo2.app.repository.EventRoomRepository;
 import com.lucatic.grupo2.app.repository.RoomRepository;
@@ -122,6 +123,36 @@ public class EventServiceImpl implements EventService {
 		}
 		event = eventRepository.save(event);
 
+<<<<<<< HEAD
 		return event;
 	}
+=======
+    @Override
+    public Event save(EventRequest eventRequest) throws EventExistException {
+
+        if (eventRepository.existsById(eventRequest.getId())) {
+            throw new EventExistException("No se puede dar de alta porque ya existe el evento");
+        }
+
+        List<Room> rooms = new ArrayList<>();
+
+        for (RoomRequest roomRequest: eventRequest.getRoomRequests()) {
+            Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getRoom().getName(), roomRequest.getRoom().getAddress());
+            if (roomFound == null) {
+                roomFound = new Room(roomRequest.getRoom().getName(),roomRequest.getRoom().getCity(), roomRequest.getRoom().getAddress(), roomRequest.getRoom().getRoomType(), roomRequest.getRoom().getCapacity());
+                roomRepository.save(roomFound);
+            }
+            rooms.add(roomFound);
+        }
+
+        Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
+
+        for (EventRoom eventRoomAux: event.getEventRooms()) {
+            eventRoomAux.setEvent(event);
+        }
+        event = eventRepository.save(event);
+
+        return event;
+    }
+>>>>>>> f18a89b80c5d2d88e650a1e724e92b728bdf3441
 }

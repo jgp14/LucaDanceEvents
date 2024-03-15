@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Clase modelo Entity de Evento para la bbdd, requests y responses. Posee los
  * gettes, settes y constuctores generados por Lombok
- *
+ * 
  * @author BlueDevTeams
  * @version v1.0.0
  * @since 15-03-2024
@@ -38,19 +38,19 @@ public class Event {
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
 	private List<EventRoom> eventRooms = new ArrayList<>();
 
-    private String name;
-    private String shortDescription;
-    private String longDescription;
-    private String photo;
-    private LocalDate initDate;
-    private LocalDate endDate;
-    private LocalTime timeOpen;
-    @Enumerated(EnumType.STRING)
-    private EnumPriceRange price;
-    private String rules;
+	private String name;
+	private String shortDescription;
+	private String longDescription;
+	private String photo;
+	private LocalDate initDate;
+	private LocalDate endDate;
+	private LocalTime timeOpen;
+	@Enumerated(EnumType.STRING)
+	private EnumPriceRange price;
+	private String rules;
 
-    public void addEventRoom(EventRoom eventRoom) {
-        eventRooms.add(eventRoom);
-    }
+	public void addEventRoom(EventRoom eventRoom) {
+		eventRooms.add(eventRoom);
+	}
 
 }
