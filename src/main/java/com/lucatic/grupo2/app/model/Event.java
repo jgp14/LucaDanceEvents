@@ -61,7 +61,9 @@ public class Event {
 	private EnumPriceRange price;
 	private String rules;
 
-
+	public Event(Long id) {
+		this.id = id;
+	}
 
 	public void addEventRoom(EventRoom eventRoom) {
 		eventRooms.add(eventRoom);

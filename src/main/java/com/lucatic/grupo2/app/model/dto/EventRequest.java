@@ -74,4 +74,17 @@ public class EventRequest {
 	 * Atributo con la lista de RoomRequest
 	 */
 	private List<RoomRequest> roomRequests = new ArrayList<>();
+
+	public EventRequest(String name, String shortDescription, String longDescription, String photo, String initDate, String endDate, String timeOpen, String price, String rules, List<RoomRequest> roomRequests) {
+		this.name = name;
+		this.shortDescription = shortDescription;
+		this.longDescription = longDescription;
+		this.photo = photo;
+		this.initDate = initDate;
+		this.endDate = endDate;
+		this.timeOpen = timeOpen;
+		this.price = price;
+		this.rules = rules;
+		this.roomRequests = roomRequests;
+	}
 }
