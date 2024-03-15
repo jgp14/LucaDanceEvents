@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Clase modelo DTO EventResponseWithError para las respuestas Posee los getters,
- * setters, toString y constuctores generados por Lombok @Data.
+ * Clase modelo DTO EventResponseWithError para las respuestas Posee los
+ * getters, setters, toString y constuctores generados por Lombok @Data.
  * 
  * @author BlueDevTeams
  * @version v1.0.0
@@ -21,15 +21,15 @@ public class EventResponseWithError {
 	/**
 	 * Atrubuto Clase eventResponse
 	 */
-    private EventResponse eventResponse;
-    
+	private EventResponse eventResponse;
+
 	/**
 	 * Atrubuto clase Error
 	 */
-    private Error error;
-    
-    /**
-     * Atributo si hay error
-     */
-    private boolean isErrorBool;
+	private Error error;
+
+	/**
+	 * Atributo boolean si hay error
+	 */
+	private boolean isErrorBool;
 }

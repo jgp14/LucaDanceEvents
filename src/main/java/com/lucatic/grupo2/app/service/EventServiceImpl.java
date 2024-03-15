@@ -18,46 +18,115 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que implementa el servicio de Eventos
+ *
+ * @author BlueDevTeams
+ * @version v1.0.0
+ * @since 15-03-2024
+ */
 @Service
 @Transactional
 public class EventServiceImpl implements EventService {
+	/**
+	 * Auto instancia el objeto de repositorio para eventos
+	 */
+	@Autowired
+	private EventRepository eventRepository;
+	/**
+	 * Auto instancia el objeto de repositorio para salas
+	 */
+	@Autowired
+	private RoomRepository roomRepository;
+	/**
+	 * Auto instancia el objeto de repositorio para la relacion entre eventos y
+	 * salas
+	 */
+	@Autowired
+	private EventRoomRepository eventRoomRepository;
+	/**
+	 * Auto instancia el objeto adaptador, realiza el trato de DTOs
+	 */
+	@Autowired
+	private EventAdapter eventAdapter;
 
-    @Autowired
-    private EventRepository eventRepository;
+	/**
+	 * Lista todos los eventos existentes
+	 * 
+	 * @return devuelve una lista de eventos
+	 * @throws EmptyListException propaga la excepcion en caso de no haber eventos
+	 */
+	@Override
+	public List<Event> findAll() throws EmptyListException {
+		List<Event> events = eventRepository.findAll();
+		if (events.isEmpty())
+			throw new EmptyListException("Lista de eventos vacía");
+		else
+			return events;
+	}
 
-    @Autowired
-    private RoomRepository roomRepository;
+	/**
+	 * Devuelve un objeto tipo Event filtrado por un id concreto
+	 * 
+	 * @param id tiene el id de un objeto Event
+	 * @return devuelve un objeto tipo Event
+	 */
+	@Override
+	public Event findById(Long id) {
+		return null;
+	}
 
-    @Autowired
-    private EventRoomRepository eventRoomRepository;
+	/**
+	 * Actualiza un evento concreto
+	 * @param event recibe un objeto Event preparado para actualzar
+	 * @return devuelve un Event actualizado
+	 */
+	@Override
+	public Event update(Event event) {
+		return null;
+	}
+	/**
+	 * Elimina un objeto con un id determinado
+	 * @param id recibe un id de un objeto a borrar
+	 */
+	@Override
+	public void deleteById(Long id) {
 
-    @Autowired
-    private EventAdapter eventAdapter;
+	}
+	/**
+	 * Metodo que guarda un evento concreto
+	 * @param eventRequest se encarga de coger datos tratables a guardar
+	 * @return devuelve un objeto tipo Event tratado
+	 */
+	@Override
+	public Event save(EventRequest eventRequest) throws EventExistException {
 
-    @Override
-    public List<Event> findAll() throws EmptyListException {
-        List<Event> events = eventRepository.findAll();
-        if (events.isEmpty())
-            throw new EmptyListException("Lista de eventos vacía");
-        else
-            return events;
-    }
+		if (eventRepository.existsById(eventRequest.getId())) {
+			throw new EventExistException("No se puede dar de alta porque ya existe el evento");
+		}
 
-    @Override
-    public Event findById(Long id) {
-        return null;
-    }
+		List<Room> rooms = new ArrayList<>();
 
-    @Override
-    public Event update(Event event) {
-        return null;
-    }
+		for (Room r : eventRequest.getRooms()) {
+			Room roomFound = roomRepository.findRoomByNameAndAddress(r.getName(), r.getAddress());
+			if (roomFound == null) {
+				roomFound = new Room(r.getName(), r.getCity(), r.getAddress(), r.getRoomType(), r.getCapacity());
+				roomRepository.save(roomFound);
+			}
+			rooms.add(roomFound);
+		}
 
-    @Override
-    public void deleteById(Long id) {
+		Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
 
-    }
+		for (EventRoom eventRoomAux : event.getEventRooms()) {
+			eventRoomAux.setEvent(event);
+		}
+		event = eventRepository.save(event);
 
+<<<<<<< HEAD
+		return event;
+	}
+=======
     @Override
     public Event save(EventRequest eventRequest) throws EventExistException {
 
@@ -85,4 +154,5 @@ public class EventServiceImpl implements EventService {
 
         return event;
     }
+>>>>>>> f18a89b80c5d2d88e650a1e724e92b728bdf3441
 }

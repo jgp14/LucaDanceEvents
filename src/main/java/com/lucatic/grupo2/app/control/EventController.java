@@ -71,11 +71,12 @@ class EventController {
 	 * @return ResponseEntity Con la respuesta de guardar el evento
 	 * @throws EventExistException cuando no se guardo
 	 */
+
 	@Operation(summary = "Dar de alta un evento", description = "Incluye un nuevo evento en la base de datos", tags = {
 			"event" })
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Evento creado correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Event.class)) }),
+					@Content(mediaType = "application/json", schema = @Schema(implementation = EventResponseWithError.class)) }),
 
 			@ApiResponse(responseCode = "400", description = "El evento ya existe", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error genérico en alta evento", content = @Content)
