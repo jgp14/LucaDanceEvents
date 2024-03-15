@@ -1,10 +1,10 @@
 package com.lucatic.grupo2.app.model.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.lucatic.grupo2.app.model.Room;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -64,12 +64,17 @@ public class EventResponse implements Serializable {
 	 */
 	private String rules;
 
-	/**
-	 * Atributo List<Room> con la lista de salas del evento
-	 */
-	private List<Room> roomList = new ArrayList<>();
 
-	public void addRoom(Room room) {
-		roomList.add(room);
+	private LocalDate initDate;
+	private LocalDate endDate;
+	private LocalTime timeOpen;
+	
+	/**
+	 * Atributo List<RoomResponse> con la lista de salas del evento
+	 */	
+	private List<RoomResponse> roomList = new ArrayList<>();
+
+	public void addRoomResponse(RoomResponse roomResponse) {
+		roomList.add(roomResponse);
 	}
 }

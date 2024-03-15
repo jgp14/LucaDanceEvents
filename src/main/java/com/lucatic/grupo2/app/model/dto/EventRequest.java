@@ -74,6 +74,17 @@ public class EventRequest {
 	 * Atributo List<Room> con las salas del evento
 	 */
 	private List<Room> rooms;
+
+	/**
+	 * Atributo LocalDate con la fecha inicial del evento
+	 */
+    private String initTime;
+    
+	/**
+	 * Atributo LocalDate con la fecha final del evento
+	 */
+    private String endTime;
+
 //
 //    private String roomAddress;
 //    private String roomCity;

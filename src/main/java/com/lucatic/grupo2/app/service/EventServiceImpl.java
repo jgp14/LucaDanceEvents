@@ -80,7 +80,7 @@ public class EventServiceImpl implements EventService {
         for (EventRoom eventRoomAux: event.getEventRooms()) {
             eventRoomAux.setEvent(event);
         }
-        eventRepository.save(event);
+        event = eventRepository.save(event);
 
         return event;
     }
