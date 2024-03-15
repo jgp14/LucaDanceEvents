@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.lucatic.grupo2.app.model.Error;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,6 @@ public class EventResponse implements Serializable {
 	private LocalTime time;
 	private String rules;
 	private List<Room> roomList = new ArrayList<>();
-	private boolean isError;
 
 	public void addRoom(Room room) {
 		roomList.add(room);

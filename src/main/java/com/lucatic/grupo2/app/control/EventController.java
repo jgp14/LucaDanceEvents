@@ -9,6 +9,7 @@ import com.lucatic.grupo2.app.model.adapter.EventAdapter;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
 import com.lucatic.grupo2.app.model.dto.EventResponse;
 import com.lucatic.grupo2.app.exceptions.EmptyListException;
+import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
 import com.lucatic.grupo2.app.service.EventService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
@@ -83,10 +84,10 @@ class EventController {
 		// return productAdapter.convertToDto(productService.getAll());
 		try {
 			List<Event> events = eventService.findAll();
-			List<EventResponse> eventsResponse = events.stream().map(c -> eventAdapter.toEventResponse(c))
+			List<EventResponseWithError> eventsResponseWithError = events.stream().map(c -> eventAdapter.toEventResponseWithError(c))
 					.collect(Collectors.toList());
 			LOGGER.info("Find all success");
-			return ResponseEntity.ok(eventsResponse);
+			return ResponseEntity.ok(eventsResponseWithError);
 
 		} catch (EmptyListException e) {
 			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());

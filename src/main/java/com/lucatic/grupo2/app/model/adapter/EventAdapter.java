@@ -11,6 +11,7 @@ import com.lucatic.grupo2.app.model.EnumPriceRange;
 import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
+import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class EventAdapter {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(EventResponse.class);
 	
-	public  EventResponse toEventResponse(Event event) {
+	public EventResponseWithError toEventResponseWithError(Event event) {
 		EventResponse eventResponse = new EventResponse();
 		eventResponse.setId(event.getId());
 		eventResponse.setName(event.getName());
@@ -36,8 +37,10 @@ public class EventAdapter {
 		for (EventRoom er: event.getEventRooms()) {
 			eventResponse.addRoom(er.getRoom());
 		}
-		eventResponse.setError(false);
-		return eventResponse;
+		EventResponseWithError eventResponseWithError = new EventResponseWithError();
+		eventResponseWithError.setEventResponse(eventResponse);
+		eventResponseWithError.setErrorBool(false);
+		return eventResponseWithError;
 	}
 
 	public Event fromEventRequest(EventRequest eventRequest, List<Room> rooms) {
@@ -57,7 +60,7 @@ public class EventAdapter {
 		List<EventRoom> eventRooms = new ArrayList<>();
 		for (Room roomFor: rooms) {
 			EventRoom eventRoomResult = new EventRoom(event, roomFor);
-			roomFor.setEventRoom(eventRoomResult);
+//			roomFor.setEventRoom(eventRoomResult);
 			eventRooms.add(eventRoomResult);
 		}
 
