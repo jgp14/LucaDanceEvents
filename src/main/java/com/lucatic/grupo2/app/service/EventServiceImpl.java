@@ -75,43 +75,13 @@ public class EventServiceImpl implements EventService {
             rooms.add(roomFound);
         }
 
-
-
-
         Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
 
         for (EventRoom eventRoomAux: event.getEventRooms()) {
             eventRoomAux.setEvent(event);
         }
         eventRepository.save(event);
-/*
-        Event createEvent = new Event(
-                eventRequest.getName(),
-                eventRequest.getShortDescription(),
-                eventRequest.getLongDescription(),
-                eventRequest.getPhoto(),
-                LocalDate.parse(eventRequest.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-                LocalTime.parse(eventRequest.getTime(), DateTimeFormatter.ofPattern("HH:mm")),
-                EnumPriceRange.valueOf(eventRequest.getPrice()),
-                eventRequest.getRules()
-                );
 
-        if (!eventRequest.getRoomName().isEmpty() && !eventRequest.getRoomAddress().isEmpty()) {
-            Room room = roomRepository.findRoomByNameAndAddress(eventRequest.getRoomName(), eventRequest.getRoomAddress());
-
-            if (room == null) {
-                room = new Room(eventRequest.getRoomName(), eventRequest.getRoomCity(), eventRequest.getRoomAddress(), eventRequest.getRoomType(), eventRequest.getRoomCapacity());
-
-            }
-            room.setEvent(createEvent);
-            createEvent.addRoom(room);
-            roomRepository.save(room);
-            eventRepository.save(createEvent);
-        }
-
-        return createEvent;
-
- */
         return event;
     }
 }
