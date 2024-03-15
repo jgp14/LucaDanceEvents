@@ -8,7 +8,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Clase modelo Entity de Evento para la bbdd, requests y responses. Posee los
+ * gettes, settes y constuctores generados por Lombok
+ *
+ * @author BlueDevTeams
+ * @version v1.0.0
+ * @since 15-03-2024
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,12 +24,19 @@ import java.util.List;
 @Table(name = "events")
 public class Event {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/**
+	 * Atributo Long id autoincremental de los eventos.
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<EventRoom> eventRooms = new ArrayList<>();
+	/**
+	 * Atributo lista de EventRoom, clase intermedia entre evento y sala. Esta
+	 * mapeado y es cascade all.
+	 */
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+	private List<EventRoom> eventRooms = new ArrayList<>();
 
     private String name;
     private String shortDescription;

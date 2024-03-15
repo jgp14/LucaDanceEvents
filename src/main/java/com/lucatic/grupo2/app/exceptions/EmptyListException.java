@@ -10,19 +10,19 @@ package com.lucatic.grupo2.app.exceptions;
 public class EmptyListException extends EventException {
 
 	/**
-	 * Constructor que recibe un mensaje
+	 * Constructor que recibe un mensaje del fallo.
 	 * 
-	 * @param message
+	 * @param message descriptivo con el error de lista vacia. 
 	 */
 	public EmptyListException(String message) {
 		super(message);
 	}
 
 	/**
-	 * Constructor que recibe un mensaje y la causa lanzable
+	 * Constructor que recibe un mensaje y la causa lanzable del fallo.
 	 * 
-	 * @param message
-	 * @param cause
+	 * @param message descriptivo con el error de lista vacia. 
+	 * @param cause Detalles de motivos de la causa throwable.
 	 */
 	public EmptyListException(String message, Throwable cause) {
 		super(message, cause);
