@@ -14,6 +14,13 @@ import com.lucatic.grupo2.app.exceptions.EmptyListException;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
 
 import com.lucatic.grupo2.app.service.EventService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -67,6 +74,34 @@ class EventController {
 	 * @return ResponseEntity
 	 * @throws EventExistException cuando no se guardo
 	 */
+	@Operation(
+            summary = "Dar de alta un evento",
+            description = "Incluye un nuevo evento en la base de datos",
+            tags = {"event"})
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Evento creado correctamente",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = Event.class)
+                            )
+                    }
+            ),
+
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "El evento ya existe",
+                    content = @Content),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Error genérico en alta evento",
+                    content = @Content)
+
+    }
+    )
 	@PostMapping
 	public ResponseEntity<?> save(@Valid @RequestBody EventRequest eventRequest) throws EventExistException {
 
@@ -90,6 +125,30 @@ class EventController {
 	 * @return ResponseEntity con el response de eventos
 	 * @throws EmptyListException cuando no devuelve elementos de la lista eventos
 	 */
+	 @Operation(
+	            summary = "Listar todos los eventos",
+	            description = "Devuelve un listado de todos los eventos existentes",
+	            tags = {"event"})
+	    @ApiResponses(value = {
+	            @ApiResponse(
+	                    responseCode = "200",
+	                    description = "Events listados",
+	                    content = @Content(
+	                            mediaType = "application/json",
+	                            array = @ArraySchema(
+	                                    schema = @Schema(implementation = EventResponseWithError.class)))
+	            ),
+	            @ApiResponse(
+	                    responseCode = "404",
+	                    description = "No hay evenntos",
+	                    content = @Content),
+	            @ApiResponse(
+	                    responseCode = "500",
+	                    description = "Error genérico listando eventos",
+	                    content = @Content)
+
+	    }
+	    )
 	@GetMapping("/all")
 	public ResponseEntity<?> listAll() throws EmptyListException {
 		// return productAdapter.convertToDto(productService.getAll());
