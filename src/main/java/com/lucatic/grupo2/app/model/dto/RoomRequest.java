@@ -1,7 +1,9 @@
 package com.lucatic.grupo2.app.model.dto;
 
 import com.lucatic.grupo2.app.model.Room;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**

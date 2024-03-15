@@ -98,35 +98,7 @@ public class EventServiceImpl implements EventService {
 	 * @param eventRequest se encarga de coger datos tratables a guardar
 	 * @return devuelve un objeto tipo Event tratado
 	 */
-	@Override
-	public Event save(EventRequest eventRequest) throws EventExistException {
-
-		if (eventRepository.existsById(eventRequest.getId())) {
-			throw new EventExistException("No se puede dar de alta porque ya existe el evento");
-		}
-
-		List<Room> rooms = new ArrayList<>();
-
-		for (Room r : eventRequest.getRooms()) {
-			Room roomFound = roomRepository.findRoomByNameAndAddress(r.getName(), r.getAddress());
-			if (roomFound == null) {
-				roomFound = new Room(r.getName(), r.getCity(), r.getAddress(), r.getRoomType(), r.getCapacity());
-				roomRepository.save(roomFound);
-			}
-			rooms.add(roomFound);
-		}
-
-		Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
-
-		for (EventRoom eventRoomAux : event.getEventRooms()) {
-			eventRoomAux.setEvent(event);
-		}
-		event = eventRepository.save(event);
-
-<<<<<<< HEAD
-		return event;
-	}
-=======
+	
     @Override
     public Event save(EventRequest eventRequest) throws EventExistException {
 
@@ -154,5 +126,5 @@ public class EventServiceImpl implements EventService {
 
         return event;
     }
->>>>>>> f18a89b80c5d2d88e650a1e724e92b728bdf3441
+
 }
