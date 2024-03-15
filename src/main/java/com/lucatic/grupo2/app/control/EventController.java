@@ -110,7 +110,7 @@ class EventController {
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId())
 					.toUri();
 			LOGGER.info("Event " + event.getName() + " with id " + event.getId() + " has been created");
-			return ResponseEntity.created(location).build();
+			return ResponseEntity.created(location).body(eventAdapter.toEventResponseWithError(event));
 
 		} catch (EventExistException e) {
 			LOGGER.warn("Error pushing the event" + e.getMessage());
