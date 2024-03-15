@@ -9,15 +9,13 @@ import java.util.List;
 import com.lucatic.grupo2.app.model.EnumPriceRange;
 import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
-import com.lucatic.grupo2.app.model.dto.EventRequest;
-import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
-import com.lucatic.grupo2.app.model.dto.RoomResponse;
+import com.lucatic.grupo2.app.model.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 import com.lucatic.grupo2.app.model.Event;
-import com.lucatic.grupo2.app.model.dto.EventResponse;
 
 /**
  * Clase adapter que convierte entidades a dtos. La entidad Event a
@@ -50,9 +48,9 @@ public class EventAdapter {
 		eventResponse.setLongDescription(event.getLongDescription());
 		eventResponse.setPhoto(event.getPhoto());
 
-		eventResponse.setInitDate(event.getInitDate());
-		eventResponse.setEndDate(event.getEndDate());
-		eventResponse.setTimeOpen(event.getTimeOpen());
+		eventResponse.setInitDate(event.getInitDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		eventResponse.setEndDate(event.getEndDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		eventResponse.setTimeOpen(event.getTimeOpen().format(DateTimeFormatter.ofPattern("HH:mm")));
 		eventResponse.setRules(event.getRules());
 
 		for (EventRoom er: event.getEventRooms()) {
@@ -96,16 +94,28 @@ public class EventAdapter {
 		event.setPrice(EnumPriceRange.valueOf(eventRequest.getPrice()));
 		event.setRules(eventRequest.getRules());
 
-		List<EventRoom> eventRooms = new ArrayList<>();
-		for (Room roomFor: rooms) {
-			EventRoom eventRoomResult = new EventRoom(event, roomFor);
-			eventRoomResult.setDate(LocalDate.parse(eventRequest.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-			eventRoomResult.setInitTime(LocalTime.parse(eventRequest.getInitTime(), DateTimeFormatter.ofPattern("HH:mm")));
-			eventRoomResult.setEndTime(LocalTime.parse(eventRequest.getEndTime(), DateTimeFormatter.ofPattern("HH:mm")));
+//		List<EventRoom> eventRooms = new ArrayList<>();
+//		for (Room roomFor: rooms) {
+//			EventRoom eventRoomResult = new EventRoom(event, roomFor);
+//			eventRoomResult.setDate(LocalDate.parse(, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+//			eventRoomResult.setInitTime(LocalTime.parse(eventRequest.getInitTime(), DateTimeFormatter.ofPattern("HH:mm")));
+//			eventRoomResult.setEndTime(LocalTime.parse(eventRequest.getEndTime(), DateTimeFormatter.ofPattern("HH:mm")));
+//
+////			roomFor.setEventRoom(eventRoomResult);
+//			eventRooms.add(eventRoomResult);
+//		}
 
-//			roomFor.setEventRoom(eventRoomResult);
-			eventRooms.add(eventRoomResult);
+		List<EventRoom> eventRooms = new ArrayList<>();
+		for (int i = 0; i < eventRequest.getRoomRequests().size(); ++i) {
+			eventRooms.add(
+					new EventRoom(
+					event,
+					rooms.get(i),
+					LocalDate.parse(eventRequest.getRoomRequests().get(i).getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+					LocalTime.parse(eventRequest.getRoomRequests().get(i).getInitTime(), DateTimeFormatter.ofPattern("HH:mm")),
+					LocalTime.parse(eventRequest.getRoomRequests().get(i).getEndTime(), DateTimeFormatter.ofPattern("HH:mm"))));
 		}
+
 
 		event.setEventRooms(eventRooms);
 		/*event.setRooms(rooms);

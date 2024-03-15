@@ -79,4 +79,12 @@ public class EventRoom {
         this.initTime = initTime;
         this.endTime = endTime;
     }
+
+    public EventRoom(Event event, Room room, LocalDate date, LocalTime initTime, LocalTime endTime) {
+        this.event = event;
+        this.room = room;
+        this.date = date;
+        this.initTime = initTime;
+        this.endTime = endTime;
+    }
 }
