@@ -28,8 +28,9 @@ public class Event {
     private String shortDescription;
     private String longDescription;
     private String photo;
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDate initDate;
+    private LocalDate endDate;
+    private LocalTime timeOpen;
     @Enumerated(EnumType.STRING)
     private EnumPriceRange price;
     private String rules;

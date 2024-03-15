@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,6 +31,10 @@ public class EventRoom {
     @JsonManagedReference
     private Room room;
 
+    private LocalDate date;
+    private LocalTime initTime;
+    private LocalTime endTime;
+
     public EventRoom(Event event, Room room) {
         this.event = event;
         this.room = room;
@@ -35,5 +42,10 @@ public class EventRoom {
 
     public EventRoom(Event event) {
         this.event = event;
+    }
+
+    public EventRoom(LocalTime initTime, LocalTime endTime) {
+        this.initTime = initTime;
+        this.endTime = endTime;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.lucatic.grupo2.app.model.Error;
+import com.lucatic.grupo2.app.repository.RoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,13 @@ public class EventResponse implements Serializable {
 	private String shortDescription;
 	private String longDescription;
 	private String photo;
-	private LocalDate date;
-	private LocalTime time;
+	private LocalDate initDate;
+	private LocalDate endDate;
+	private LocalTime timeOpen;
 	private String rules;
-	private List<Room> roomList = new ArrayList<>();
+	private List<RoomResponse> roomList = new ArrayList<>();
 
-	public void addRoom(Room room) {
-		roomList.add(room);
+	public void addRoomResponse(RoomResponse roomResponse) {
+		roomList.add(roomResponse);
 	}
 }
