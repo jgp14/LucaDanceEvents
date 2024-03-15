@@ -50,16 +50,6 @@ public class EventResponse implements Serializable {
 	private String photo;
 
 	/**
-	 * Atributo LocalDate con la fecha del evento
-	 */
-	private String date;
-
-	/**
-	 * Atributo LocalTime con la hora del evento
-	 */
-	private String time;
-
-	/**
 	 * Atributo String con las normas del evento
 	 */
 	private String rules;
