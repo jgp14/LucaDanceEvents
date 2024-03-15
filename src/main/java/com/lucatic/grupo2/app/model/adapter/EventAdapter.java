@@ -9,10 +9,13 @@ import java.util.List;
 import com.lucatic.grupo2.app.model.EnumPriceRange;
 import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
-import com.lucatic.grupo2.app.model.dto.*;
+import com.lucatic.grupo2.app.model.dto.EventRequest;
+import com.lucatic.grupo2.app.model.dto.EventResponse;
+import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
+import com.lucatic.grupo2.app.model.dto.RoomResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 import com.lucatic.grupo2.app.model.Event;

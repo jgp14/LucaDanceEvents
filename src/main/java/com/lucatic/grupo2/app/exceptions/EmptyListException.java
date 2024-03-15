@@ -10,6 +10,11 @@ package com.lucatic.grupo2.app.exceptions;
 public class EmptyListException extends EventException {
 
 	/**
+	 *  Genera un serial para la excepcion personalizada
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Constructor que recibe un mensaje del fallo.
 	 * 
 	 * @param message descriptivo con el error de lista vacia. 
