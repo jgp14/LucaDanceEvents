@@ -25,12 +25,11 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class HandlerProductException {
 
-
 	/**
-	 * Error método no soportado
+	 * Error método error de ejecucion generico.
 	 *
-	 * @param e La excepción
-	 * @return la respuesta
+	 * @param e La excepción de ejecucion.
+	 * @return ResponseEntity con la respuesta con su codigo de error.
 	 */
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<EventResponseWithError> errorGenericoRuntime(RuntimeException e) {
@@ -46,6 +45,12 @@ public class HandlerProductException {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
+	/**
+	 * Error de excepcion generica
+	 * 
+	 * @param e La Excepcion
+	 * @return ResponseEntity con la respuesta con su codigo de error.
+	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<EventResponseWithError> errorGenericoRuntime(Exception e) {
 		Error error = new Error();
@@ -60,50 +65,72 @@ public class HandlerProductException {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
-    @ExceptionHandler(EventExistException.class)
-    public ResponseEntity<EventResponseWithError> errorEventExist(EventExistException e) {
-        Error error = new Error();
-        error.setDate(LocalDateTime.now());
-        error.setError("Error ya existe el evento");
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        EventResponseWithError eventResponseWithError = new EventResponseWithError();
-        eventResponseWithError.setError(error);
-        eventResponseWithError.setErrorBool(true);
-        // return ResponseEntity.internalServerError().body(error);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
-    }
+	/**
+	 * Error de excepcion por Evento ya existente.
+	 * 
+	 * @param e La excepcion de evento no existe.
+	 * @return ResponseEntity con la respuesta del error.
+	 */
+	@ExceptionHandler(EventExistException.class)
+	public ResponseEntity<EventResponseWithError> errorEventExist(EventExistException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error ya existe el evento");
+		error.setMessage(e.getMessage());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		EventResponseWithError eventResponseWithError = new EventResponseWithError();
+		eventResponseWithError.setError(error);
+		eventResponseWithError.setErrorBool(true);
+		// return ResponseEntity.internalServerError().body(error);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
+	}
 
+	/**
+	 * Error de excepcion por lista vacia ya existente.
+	 * 
+	 * @param e La excepcion de lista vacia.
+	 * @return ResponseEntity con la respuesta del error.
+	 */
+	@ExceptionHandler(EmptyListException.class)
+	public ResponseEntity<EventResponseWithError> errorEventExist(EmptyListException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error la lista está vacía");
+		error.setMessage(e.getMessage());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		EventResponseWithError eventResponseWithError = new EventResponseWithError();
+		eventResponseWithError.setError(error);
+		eventResponseWithError.setErrorBool(true);
+		// return ResponseEntity.internalServerError().body(error);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
+	}
 
-    @ExceptionHandler(EmptyListException.class)
-    public ResponseEntity<EventResponseWithError> errorEventExist(EmptyListException e) {
-        Error error = new Error();
-        error.setDate(LocalDateTime.now());
-        error.setError("Error la lista está vacía");
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        EventResponseWithError eventResponseWithError = new EventResponseWithError();
-        eventResponseWithError.setError(error);
-        eventResponseWithError.setErrorBool(true);
-        // return ResponseEntity.internalServerError().body(error);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
-    }
+	/**
+	 * Error de excepcion no se encontro el Handler.
+	 * 
+	 * @param e La excepcion de handler no encontrado.
+	 * @return esponseEntity con la respuesta del error.
+	 */
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<EventResponseWithError> errorNoHandlerFound(NoHandlerFoundException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error en la URL");
+		error.setMessage(e.getMessage());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		EventResponseWithError eventResponseWithError = new EventResponseWithError();
+		eventResponseWithError.setError(error);
+		eventResponseWithError.setErrorBool(true);
+		// return ResponseEntity.internalServerError().body(error);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
+	}
 
-
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<EventResponseWithError> errorNoHandlerFound(NoHandlerFoundException e) {
-        Error error = new Error();
-        error.setDate(LocalDateTime.now());
-        error.setError("Error en la URL");
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        EventResponseWithError eventResponseWithError = new EventResponseWithError();
-        eventResponseWithError.setError(error);
-        eventResponseWithError.setErrorBool(true);
-        // return ResponseEntity.internalServerError().body(error);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
-    }
-
+	/**
+	 * Error de excepcion por Resquest Metodo no soportado.
+	 * 
+	 * @param e La excepcion de metodo no esta soportado.
+	 * @return ResponseEntity con la respuesta del error.
+	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public ResponseEntity<EventResponseWithError> errorNoHandlerFound(HttpRequestMethodNotSupportedException e) {
 		Error error = new Error();

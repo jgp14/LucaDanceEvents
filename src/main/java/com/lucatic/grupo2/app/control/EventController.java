@@ -52,8 +52,8 @@ class EventController {
 	/**
 	 * Guarda un request body de un nuevo evento en la bbdd events
 	 * 
-	 * @param eventRequest
-	 * @return ResponseEntity
+	 * @param eventRequest Con los datos del Event a guardar
+	 * @return ResponseEntity Con la respuesta de guardar el evento
 	 * @throws EventExistException cuando no se guardo
 	 */
 	@PostMapping
