@@ -1,6 +1,7 @@
 package com.lucatic.grupo2.app;
 
 import com.lucatic.grupo2.app.exceptions.EmptyListException;
+import com.lucatic.grupo2.app.exceptions.EventException;
 import com.lucatic.grupo2.app.model.Event;
 import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.repository.EventRepository;
@@ -44,7 +45,22 @@ class EventsGrupo2ApplicationTests {
 	}
 
 	@Test
-	public void ListAllWithNotEmptyList() {
+	public void ListAllWithNotEmptyList() throws EmptyListException {
+
+		Event event = new Event();
+		List<Event> events = Arrays.asList(event);
+
+		when(eventRepository.findAll()).thenReturn(events);
+
+        assertFalse(eventService.findAll().isEmpty());
+	}
+
+	@Test
+	public void addEventIfNull() {
+
+		when(eventRepository.save(null)).thenReturn(null);
+
+		assertThrows(EventException.class, () -> eventService.save(null));
 	}
 
 }

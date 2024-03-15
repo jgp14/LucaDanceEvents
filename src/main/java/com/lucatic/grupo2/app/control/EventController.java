@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.lucatic.grupo2.app.exceptions.EventException;
 import com.lucatic.grupo2.app.model.Event;
 import com.lucatic.grupo2.app.model.adapter.EventAdapter;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
@@ -83,7 +84,7 @@ class EventController {
 
 	})
 	@PostMapping
-	public ResponseEntity<?> save(@Valid @RequestBody EventRequest eventRequest) throws EventExistException {
+	public ResponseEntity<?> save(@Valid @RequestBody EventRequest eventRequest) throws EventException {
 
 		try {
 			Event event = eventService.save(eventRequest);
@@ -94,6 +95,9 @@ class EventController {
 
 		} catch (EventExistException e) {
 			LOGGER.warn("Error pushing the event" + e.getMessage());
+			throw e;
+		} catch (EventException e) {
+			LOGGER.warn("Error generico" + e.getMessage());
 			throw e;
 		}
 
