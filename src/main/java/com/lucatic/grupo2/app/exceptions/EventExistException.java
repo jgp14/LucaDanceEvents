@@ -8,7 +8,7 @@ package com.lucatic.grupo2.app.exceptions;
  * @version v1.0.0
  * @since 06-03-2024
  */
-public class EventExistException extends Exception {
+public class EventExistException extends EventException {
 
 	/**
 	 * Constructor que recibe un mensaje

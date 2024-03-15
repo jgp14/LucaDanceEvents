@@ -7,7 +7,7 @@ package com.lucatic.grupo2.app.exceptions;
  * @version v1.0.0
  * @since 15-03-2024
  */
-public class EmptyListException extends Exception {
+public class EmptyListException extends EventException {
 
 	/**
 	 * Constructor que recibe un mensaje
