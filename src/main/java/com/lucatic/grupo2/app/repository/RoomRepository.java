@@ -10,5 +10,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
+	/**
+	 * Metodo de la interfaz para buscar una sala por nombre y direccion
+	 * @param name nombre de la sala a buscar.
+	 * @param address diraccion postal de la sala.
+	 * @return devuelve una entidad Room o sala
+	 */
     Room findRoomByNameAndAddress(String name, String address);
 }
