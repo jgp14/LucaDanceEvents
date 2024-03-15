@@ -20,18 +20,41 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lucatic.grupo2.app.exceptions.EventExistException;
 
+/**
+ * Clase controladora, toma las decisiones de la aplicacion
+ *
+ * @author BlueDevTeam
+ * @version 1.0.0
+ * @since 15-03-2024
+ */
 @RestController
 @RequestMapping("/event")
 class EventController {
 
+	/**
+	 * Logger que registra los errores de clase EventController
+	 */
 	private final static Logger LOGGER = LogManager.getLogger(EventController.class);
 
+	/**
+	 * Auto instanciamos el servicio de eventos
+	 */
 	@Autowired
 	private EventService eventService;
 
+	/**
+	 * Adaptador con transformacion de envento entity a response y request to entity
+	 */
 	@Autowired
 	private EventAdapter eventAdapter;
 
+	/**
+	 * Guarda un request body de un nuevo evento en la bbdd events
+	 * 
+	 * @param eventRequest
+	 * @return ResponseEntity
+	 * @throws EventExistException cuando no se guardo
+	 */
 	@PostMapping
 	public ResponseEntity<?> save(@Valid @RequestBody EventRequest eventRequest) throws EventExistException {
 
@@ -49,6 +72,12 @@ class EventController {
 
 	}
 
+	/**
+	 * Lista todos los eventos que estan guardados en la bbdd
+	 * 
+	 * @return ResponseEntity con el response de eventos
+	 * @throws EmptyListException cuando no devuelve elementos de la lista eventos
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> listAll() throws EmptyListException {
 		// return productAdapter.convertToDto(productService.getAll());

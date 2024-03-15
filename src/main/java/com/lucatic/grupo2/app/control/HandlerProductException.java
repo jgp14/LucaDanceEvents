@@ -11,56 +11,81 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalDateTime;
 
+/**
+ * Clase Handler que realiza el manejo personalizado de errores
+ *
+ * @author BlueDevTeam
+ * @version 1.0.0
+ * @since 15-03-2024
+ */
 @RestControllerAdvice
 public class HandlerProductException {
 
-    /**
-     * Error método no soportado
-     *
-     * @param e La excepción
-     * @return la respuesta
-     */
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Error> errorGenericoRuntime(RuntimeException e) {
-        Error error = new Error();
-        error.setDate(LocalDateTime.now());
-        error.setError("Error procesando petición");
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        // return ResponseEntity.internalServerError().body(error);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
-    }
+	/**
+	 * Error método no soportado
+	 * 
+	 * @param e La excepción
+	 * @return la respuesta
+	 */
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<Error> errorGenericoRuntime(RuntimeException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error procesando petición");
+		error.setMessage(e.getMessage());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		// return ResponseEntity.internalServerError().body(error);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
+	}
 
-    @ExceptionHandler(EventExistException.class)
-    public ResponseEntity<Error> errorEventExist(EventExistException e) {
-        Error error = new Error();
-        error.setDate(LocalDateTime.now());
-        error.setError("Error ya existe el evento");
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        // return ResponseEntity.internalServerError().body(error);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
-    }
+	/**
+	 * Evento existe exceptión
+	 * 
+	 * @param e la excepción
+	 * @return Respuesta personalizada
+	 */
+	@ExceptionHandler(EventExistException.class)
+	public ResponseEntity<Error> errorEventExist(EventExistException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error ya existe el evento");
+		error.setMessage(e.getMessage());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		// return ResponseEntity.internalServerError().body(error);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
+	}
 
-    @ExceptionHandler(EmptyListException.class)
-    public ResponseEntity<Error> errorEventExist(EmptyListException e) {
-        Error error = new Error();
-        error.setDate(LocalDateTime.now());
-        error.setError("Error la lista está vacía");
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        // return ResponseEntity.internalServerError().body(error);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
-    }
+	/**
+	 * Lista vacia exceptión
+	 * 
+	 * @param e la excepción
+	 * @return Respuesta personalizada
+	 */
+	@ExceptionHandler(EmptyListException.class)
+	public ResponseEntity<Error> errorEventExist(EmptyListException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error la lista está vacía");
+		error.setMessage(e.getMessage());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		// return ResponseEntity.internalServerError().body(error);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
+	}
 
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<Error> errorNoHandlerFound(NoHandlerFoundException e) {
-        Error error = new Error();
-        error.setDate(LocalDateTime.now());
-        error.setError("Error en la URL");
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        // return ResponseEntity.internalServerError().body(error);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
-    }
+	/**
+	 * No encontrado handler
+	 * 
+	 * @param e la excepción
+	 * @return Respuesta personalizada
+	 */
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<Error> errorNoHandlerFound(NoHandlerFoundException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error en la URL");
+		error.setMessage(e.getMessage());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		// return ResponseEntity.internalServerError().body(error);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
+	}
 }
