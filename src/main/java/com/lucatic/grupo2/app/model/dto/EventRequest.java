@@ -53,7 +53,7 @@ public class EventRequest {
 	/**
 	 * Atributo LocalTime con la hora del evento
 	 */
-	private String time;
+	private String timeOpen;
 
 	/**
 	 * Atributo String con el precio del evento
