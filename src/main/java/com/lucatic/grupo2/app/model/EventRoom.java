@@ -1,5 +1,6 @@
 package com.lucatic.grupo2.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -11,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +52,7 @@ public class EventRoom {
      */
     @ManyToOne
     @JoinColumn
+    @JsonBackReference
     private Event event;
 
     /**
@@ -60,7 +64,9 @@ public class EventRoom {
     private Room room;
 
     private LocalDate date;
+
     private LocalTime initTime;
+
     private LocalTime endTime;
 
     /**

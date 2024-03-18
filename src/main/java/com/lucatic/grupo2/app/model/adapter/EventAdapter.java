@@ -12,8 +12,8 @@ import com.lucatic.grupo2.app.model.Room;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
 import com.lucatic.grupo2.app.model.dto.EventResponse;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
-import com.lucatic.grupo2.app.model.dto.RoomResponse;
 
+import com.lucatic.grupo2.app.model.dto.RoomResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -56,20 +56,23 @@ public class EventAdapter {
 		eventResponse.setTimeOpen(event.getTimeOpen().format(DateTimeFormatter.ofPattern("HH:mm")));
 		eventResponse.setRules(event.getRules());
 
+		List<RoomResponse> roomResponses = new ArrayList<>();
 		for (EventRoom er: event.getEventRooms()) {
-			RoomResponse roomResponse = new RoomResponse();
-			roomResponse.setCity(er.getRoom().getCity());
-			roomResponse.setAddress(er.getRoom().getAddress());
-			roomResponse.setRoomType(er.getRoom().getRoomType());
-			roomResponse.setCapacity(er.getRoom().getCapacity());
-			roomResponse.setId(er.getRoom().getId());
-			roomResponse.setName(er.getRoom().getName());
-			roomResponse.setRoomDate(er.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-			roomResponse.setRoomInitTime(er.getInitTime().format(DateTimeFormatter.ofPattern("HH:mm")));
-			roomResponse.setRoomEndTime(er.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")));
-			eventResponse.addRoomResponse(roomResponse);
-
+			roomResponses.add(
+					new RoomResponse(
+							er.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+							er.getInitTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+							er.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+							er.getRoom().getName(),
+							er.getRoom().getCity(),
+							er.getRoom().getAddress(),
+							er.getRoom().getRoomType(),
+							er.getRoom().getCapacity()
+							));
 		}
+		eventResponse.setRoomResponses(roomResponses);
+
+
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setEventResponse(eventResponse);
 		eventResponseWithError.setErrorBool(false);
@@ -86,7 +89,6 @@ public class EventAdapter {
 
 
 		Event event = new Event();
-		event.setId(eventRequest.getId());
 		event.setName(eventRequest.getName());
 		event.setShortDescription(eventRequest.getShortDescription());
 		event.setLongDescription(eventRequest.getLongDescription());

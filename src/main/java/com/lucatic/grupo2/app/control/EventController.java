@@ -84,7 +84,7 @@ class EventController {
 
 	})
 	@PostMapping
-	public ResponseEntity<?> save(@Valid @RequestBody EventRequest eventRequest) throws EventException {
+	public ResponseEntity<?> save(@RequestBody @Valid EventRequest eventRequest) throws EventException {
 
 		try {
 			Event event = eventService.save(eventRequest);
@@ -119,11 +119,12 @@ class EventController {
 	})
 	@GetMapping("/all")
 	public ResponseEntity<?> listAll() throws EmptyListException {
-		// return productAdapter.convertToDto(productService.getAll());
+
 		try {
 			List<Event> events = eventService.findAll();
 			List<EventResponseWithError> eventsResponseWithError = events.stream()
-					.map(c -> eventAdapter.toEventResponseWithError(c)).collect(Collectors.toList());
+					.map(e -> eventAdapter.toEventResponseWithError(e)).collect(Collectors.toList());
+
 			LOGGER.info("Find all success");
 			return ResponseEntity.ok(eventsResponseWithError);
 

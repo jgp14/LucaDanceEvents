@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +45,7 @@ public class Room {
 	 * Atributo string con el nombre de la ciudad de ubicacion de la sala.
 	 */
 	private String city;
+
 
 	/**
 	 * Atributo string con la direcion postal exacta de la sala.

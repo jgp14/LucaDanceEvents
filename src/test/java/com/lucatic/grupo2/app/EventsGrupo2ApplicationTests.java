@@ -79,7 +79,6 @@ class EventsGrupo2ApplicationTests {
 	public void addEventIfNoExist() throws EventException {
 
 		EventRequest eventRequest = new EventRequest(
-				0L,
 				"YYY",
 				"YYY",
 				"YYY",
@@ -89,43 +88,22 @@ class EventsGrupo2ApplicationTests {
 				"17:00",
 				"FULLPASS",
 				"aaa",
-				Arrays.asList(new RoomRequest(
-						new Room("aaa", "aaa", "aaa", "aaa", 100),
-						"01-01-2000",
-						"17:00",
-						"17:00"
-				))
+                Arrays.asList(
+                        new RoomRequest(
+                                "aaa",
+                                "aaa",
+                                "aaa",
+                                "aaa",
+                                100,
+                                "01-01-2024",
+                                "17:00",
+                                "20:00"
+                        )
+                )
+
+
 		);
 
 		assertEquals("YYY", eventService.save(eventRequest).getName());
-	}
-
-	/**
-	 * Salvar event si existe el evento
-	 */
-	@Test
-	public void addEventIfExist() {
-
-		EventRequest eventRequest = new EventRequest(
-				5L,
-				"YYY",
-				"YYY",
-				"YYY",
-				"YYY",
-				"01-01-2000",
-				"01-01-2000",
-				"17:00",
-				"FULLPASS",
-				"aaa",
-				Arrays.asList(new RoomRequest(
-						new Room("aaa", "aaa", "aaa", "aaa", 100),
-						"01-01-2000",
-						"17:00",
-						"17:00"
-				))
-		);
-
-		assertThrows(EventExistException.class, () -> eventService.save(eventRequest));
-
 	}
 }

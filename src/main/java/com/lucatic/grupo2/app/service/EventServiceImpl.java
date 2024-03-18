@@ -12,6 +12,7 @@ import com.lucatic.grupo2.app.model.dto.RoomRequest;
 import com.lucatic.grupo2.app.repository.EventRepository;
 import com.lucatic.grupo2.app.repository.EventRoomRepository;
 import com.lucatic.grupo2.app.repository.RoomRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,21 +103,17 @@ public class EventServiceImpl implements EventService {
 	 * @return devuelve un objeto tipo Event tratado
 	 */
     @Override
-    public Event save(EventRequest eventRequest) throws EventException {
+    public Event save(@Valid EventRequest eventRequest) throws EventException {
 
 		if (eventRequest == null)
 			throw new EventException("Event request is null");
 
-        if (eventRepository.existsById(eventRequest.getId())) {
-            throw new EventExistException("No se puede dar de alta porque ya existe el evento");
-        }
-
         List<Room> rooms = new ArrayList<>();
 
         for (RoomRequest roomRequest: eventRequest.getRoomRequests()) {
-            Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getRoom().getName(), roomRequest.getRoom().getAddress());
+            Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
             if (roomFound == null) {
-                roomFound = new Room(roomRequest.getRoom().getName(),roomRequest.getRoom().getCity(), roomRequest.getRoom().getAddress(), roomRequest.getRoom().getRoomType(), roomRequest.getRoom().getCapacity());
+                roomFound = new Room(roomRequest.getName(),roomRequest.getCity(), roomRequest.getAddress(), roomRequest.getRoomType(), roomRequest.getCapacity());
                 roomRepository.save(roomFound);
             }
             rooms.add(roomFound);

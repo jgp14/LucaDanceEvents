@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lucatic.grupo2.app.model.EventRoom;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -75,7 +76,7 @@ public class EventResponse implements Serializable {
 	/**
 	 * Atributo List<RoomResponse> con la lista de respuestas de salas del evento
 	 */
-	private List<RoomResponse> roomList = new ArrayList<>();
+	private List<RoomResponse> roomResponses = new ArrayList<>();
 
 	/**
 	 * Metodo para agregar una nueva RoomResponse a la lista de RoomResponse
@@ -83,6 +84,6 @@ public class EventResponse implements Serializable {
 	 * @param roomResponse que se quiere incorporar
 	 */
 	public void addRoomResponse(RoomResponse roomResponse) {
-		roomList.add(roomResponse);
+		roomResponses.add(roomResponse);
 	}
 }

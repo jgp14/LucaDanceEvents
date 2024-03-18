@@ -1,9 +1,15 @@
 package com.lucatic.grupo2.app.model.dto;
 
 import com.lucatic.grupo2.app.model.Room;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 
 /**
@@ -17,25 +23,39 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Valid
 public class RoomRequest {
 
-	/**
-	 * Atrubuto Clase Room que ya incluye los atributos de la sala
-	 */
-	private Room room;
+	@NotBlank
+	private String name;
+	@NotBlank
+	private String city;
+	@NotBlank
+	private String address;
+	@NotBlank
+	private String roomType;
+	@NotNull
+	@Positive
+	private Integer capacity;
+
 
 	/**
 	 * Atributo string con la fecha de la sala parseada.
 	 */
+	@NotEmpty
 	private String date;
 
 	/**
 	 * Atributo string con la fecha inicial parseada del evento en la sala
 	 */
+	@NotEmpty
 	private String initTime;
 
 	/**
 	 * Atributo string con la fecha final parseada del evento en la sala
 	 */
+	@NotEmpty
 	private String endTime;
+
+
 }
