@@ -52,14 +52,23 @@ public class Event {
 
 	/** El nombre del evento */
 	private String name;
+
+	/** Descripción corta del evento */
 	private String shortDescription;
+	/** Descripción larga del evento */
 	private String longDescription;
+	/** La foto del evento */
 	private String photo;
+	/** fecha de apertura del evento */
 	private LocalDate initDate;
+	/** fecha de fin del evento */
 	private LocalDate endDate;
+	/** Hora de apertura */
 	private LocalTime timeOpen;
+	/** Precio del evento */
 	@Enumerated(EnumType.STRING)
 	private EnumPriceRange price;
+	/** Reglas del evento */
 	private String rules;
 
 

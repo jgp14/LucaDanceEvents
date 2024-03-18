@@ -87,6 +87,7 @@ public class EventServiceImpl implements EventService {
 	public Event update(Event event) {
 		return null;
 	}
+
 	/**
 	 * Elimina un objeto con un id determinado
 	 * @param id recibe un id de un objeto a borrar
@@ -96,10 +97,10 @@ public class EventServiceImpl implements EventService {
 
 	}
 
-
 	/**
 	 * Metodo que guarda un evento concreto
-	 * @param eventRequest se encarga de coger datos tratables a guardar
+	 * @param eventRequest se encarga de coger datos tratables a guarda
+	 * @throws EventException Si intenta dar de alta un evento nulo
 	 * @return devuelve un objeto tipo Event tratado
 	 */
     @Override

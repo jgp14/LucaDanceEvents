@@ -99,16 +99,6 @@ public class EventAdapter {
 		event.setPrice(EnumPriceRange.valueOf(eventRequest.getPrice()));
 		event.setRules(eventRequest.getRules());
 
-//		List<EventRoom> eventRooms = new ArrayList<>();
-//		for (Room roomFor: rooms) {
-//			EventRoom eventRoomResult = new EventRoom(event, roomFor);
-//			eventRoomResult.setDate(LocalDate.parse(, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-//			eventRoomResult.setInitTime(LocalTime.parse(eventRequest.getInitTime(), DateTimeFormatter.ofPattern("HH:mm")));
-//			eventRoomResult.setEndTime(LocalTime.parse(eventRequest.getEndTime(), DateTimeFormatter.ofPattern("HH:mm")));
-//
-////			roomFor.setEventRoom(eventRoomResult);
-//			eventRooms.add(eventRoomResult);
-//		}
 
 		List<EventRoom> eventRooms = new ArrayList<>();
 		for (int i = 0; i < eventRequest.getRoomRequests().size(); ++i) {
@@ -123,15 +113,7 @@ public class EventAdapter {
 
 
 		event.setEventRooms(eventRooms);
-		/*event.setRooms(rooms);
-		for (Room r: rooms) {
-			r.setEvent(event);
-		}*/
+
 		return event;
 	}
-	/*
-	public  List<EventResponse> toEventResponse(List<Event> events) {
-		LOGGER.info("----- Evemtps:" + events);
-		return events.stream().map(p -> toEventResponse(p)).collect(Collectors.toList());
-	}*/
 }

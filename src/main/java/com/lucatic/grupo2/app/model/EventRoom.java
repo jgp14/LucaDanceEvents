@@ -12,8 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -63,10 +61,13 @@ public class EventRoom {
     @JsonManagedReference
     private Room room;
 
+    /** La fecha de la sala */
     private LocalDate date;
 
+    /** La hora de inicio de la sala */
     private LocalTime initTime;
 
+    /** La hora de fin de la sala */
     private LocalTime endTime;
 
     /**

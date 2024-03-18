@@ -26,14 +26,19 @@ import lombok.NonNull;
 @Valid
 public class RoomRequest {
 
+	/** NOmbre de la sala */
 	@NotBlank
 	private String name;
+	/** Ciudad de la sala */
 	@NotBlank
 	private String city;
+	/** Dirección */
 	@NotBlank
 	private String address;
+	/** Tipo salsa - bachata - kizomba */
 	@NotBlank
 	private String roomType;
+	/** Capacidad de la salsa */
 	@NotNull
 	@Positive
 	private Integer capacity;
