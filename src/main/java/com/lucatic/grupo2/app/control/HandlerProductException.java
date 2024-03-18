@@ -56,6 +56,7 @@ public class HandlerProductException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error genérico procesando petición");
+		error.setMessage(e.getClass().getCanonicalName());
 		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		// return ResponseEntity.internalServerError().body(error);
