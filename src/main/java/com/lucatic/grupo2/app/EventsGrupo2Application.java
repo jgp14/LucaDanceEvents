@@ -15,6 +15,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class EventsGrupo2Application {
 
+	/**
+	 * Punto de entrada al programa principal
+	 * @param args ARgumentos por línea de comandos
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(EventsGrupo2Application.class, args);
 	}

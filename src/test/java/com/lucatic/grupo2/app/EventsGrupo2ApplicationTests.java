@@ -1,43 +1,109 @@
 package com.lucatic.grupo2.app;
 
-import com.lucatic.grupo2.app.model.Event;
+import com.lucatic.grupo2.app.exceptions.EmptyListException;
+import com.lucatic.grupo2.app.exceptions.EventException;
+import com.lucatic.grupo2.app.exceptions.EventExistException;
+import com.lucatic.grupo2.app.model.Room;
+import com.lucatic.grupo2.app.model.dto.EventRequest;
+import com.lucatic.grupo2.app.model.dto.RoomRequest;
 import com.lucatic.grupo2.app.repository.EventRepository;
 import com.lucatic.grupo2.app.service.EventService;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.w3c.dom.stylesheets.LinkStyle;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de test
+ *
+ * @author BlueDevTeams
+ * @version v1.0.0
+ * @since 15-03-2024
+ */
 @SpringBootTest
 class EventsGrupo2ApplicationTests {
 
+	/** Inyectar servicio */
 	@Autowired
 	private EventService eventService;
 
-	@MockBean
+	/** Inyectar repositorio */
+	@Autowired
 	private EventRepository eventRepository;
 
+	/**
+	 * Funciona test
+	 */
 	@Test
 	void contextLoads() {
+		Assertions.assertThat(true).isTrue();
 	}
 
+	/**
+	 * Test listar todos con lista vacía
+	 */
 	@Test
-	public void listarAllConListaVacia()  {
+	public void listAllWithEmptyList() {
 
-		List<Event> events = new ArrayList<>();
-
-		when(eventRepository.findAll()).thenReturn(events);
-
-		assertEquals(events, eventRepository.findAll());
+		assertDoesNotThrow(() -> eventService.findAll());
 	}
 
+	/**
+	 * Test listar todos con base de datos no vacía
+	 * @throws EmptyListException Si la lista está vacía
+	 */
+	@Test
+	public void ListAllWithNotEmptyList() throws EmptyListException {
+
+		assertFalse(eventService.findAll().isEmpty());
+	}
+
+	/**
+	 * Salvar event if le pasamos un null
+	 */
+	@Test
+	public void addEventIfNull() {
+
+		assertThrows(EventException.class, () -> eventService.save(null));
+	}
+
+	/**
+	 * Salvar event si no existe el evento
+	 * @throws EventException
+	 */
+	@Test
+	public void addEventIfNoExist() throws EventException {
+
+		EventRequest eventRequest = new EventRequest(
+				"YYY",
+				"YYY",
+				"YYY",
+				"YYY",
+				"01-01-2000",
+				"01-01-2000",
+				"17:00",
+				"FULLPASS",
+				"aaa",
+                Arrays.asList(
+                        new RoomRequest(
+                                "aaa",
+                                "aaa",
+                                "aaa",
+                                "aaa",
+                                100,
+                                "01-01-2024",
+                                "17:00",
+                                "20:00"
+                        )
+                )
+
+
+		);
+
+		assertEquals("YYY", eventService.save(eventRequest).getName());
+	}
 }

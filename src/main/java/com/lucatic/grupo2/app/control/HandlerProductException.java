@@ -4,9 +4,11 @@ import com.lucatic.grupo2.app.exceptions.EmptyListException;
 import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Error;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
+import jakarta.xml.bind.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -34,7 +36,7 @@ public class HandlerProductException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error procesando petición");
-		error.setMessage(e.getMessage());
+		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		// return ResponseEntity.internalServerError().body(error);
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
@@ -55,6 +57,21 @@ public class HandlerProductException {
 		error.setDate(LocalDateTime.now());
 		error.setError("Error genérico procesando petición");
 		error.setMessage(e.getClass().getCanonicalName());
+		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		// return ResponseEntity.internalServerError().body(error);
+		EventResponseWithError eventResponseWithError = new EventResponseWithError();
+		eventResponseWithError.setError(error);
+		eventResponseWithError.setErrorBool(true);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<EventResponseWithError> errorGenericoRuntime(MethodArgumentNotValidException e) {
+		Error error = new Error();
+		error.setDate(LocalDateTime.now());
+		error.setError("Error en los datos del cliente, compruebelos");
+		error.setMessage("Error del tipo " + e.getClass().getSimpleName() + " " + e.getMessage().split(":")[1]);
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		// return ResponseEntity.internalServerError().body(error);
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
@@ -74,7 +91,7 @@ public class HandlerProductException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error ya existe el evento");
-		error.setMessage(e.getMessage());
+		error.setMessage("Error del tipo " + e.getClass().getSimpleName() + " " + e.getMessage());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
@@ -94,7 +111,7 @@ public class HandlerProductException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error la lista está vacía");
-		error.setMessage(e.getMessage());
+		error.setMessage("Error del tipo " + e.getClass().getSimpleName() + " " + e.getMessage());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
@@ -114,7 +131,7 @@ public class HandlerProductException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error en la URL");
-		error.setMessage(e.getMessage());
+		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
@@ -134,7 +151,7 @@ public class HandlerProductException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error en la URL");
-		error.setMessage(e.getMessage());
+		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);

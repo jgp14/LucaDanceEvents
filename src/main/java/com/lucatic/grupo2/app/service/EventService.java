@@ -1,6 +1,7 @@
 package com.lucatic.grupo2.app.service;
 
 import com.lucatic.grupo2.app.exceptions.EmptyListException;
+import com.lucatic.grupo2.app.exceptions.EventException;
 import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Event;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
@@ -42,5 +43,5 @@ public interface EventService {
      * @return devuelve un objeto tipo Event
      * @throws EventExistException Gestiona este tipo de excepcion
      */
-    Event save(EventRequest event) throws EventExistException;
+    Event save(EventRequest event) throws EventException;
 }
