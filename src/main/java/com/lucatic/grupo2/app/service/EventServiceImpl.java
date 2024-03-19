@@ -80,6 +80,7 @@ public class EventServiceImpl implements EventService {
 
 	/**
 	 * Actualiza un evento concreto
+	 *
 	 * @param event recibe un objeto Event preparado para actualzar
 	 * @return devuelve un Event actualizado
 	 */
@@ -90,6 +91,7 @@ public class EventServiceImpl implements EventService {
 
 	/**
 	 * Elimina un objeto con un id determinado
+	 *
 	 * @param id recibe un id de un objeto a borrar
 	 */
 	@Override
@@ -127,6 +129,14 @@ public class EventServiceImpl implements EventService {
         }
         event = eventRepository.save(event);
 
-        return event;
-    }
+		return event;
+	}
+
+	@Override
+	public boolean eventFindById(long id) {
+		if (eventRepository.findById(id).isPresent()) {
+			return true;
+		}
+		return false;
+	}
 }

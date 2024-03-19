@@ -25,8 +25,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.jdbc.datasource.UserCredentialsDataSourceAdapter;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,9 +76,8 @@ class EventController {
 
 	@Operation(summary = "Dar de alta un evento", description = "Incluye un nuevo evento en la base de datos", tags = {
 			"event" })
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Evento creado correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = EventResponseWithError.class)) }),
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Evento creado correctamente", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = EventResponseWithError.class)) }),
 
 			@ApiResponse(responseCode = "400", description = "El evento ya existe", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error genérico en alta evento", content = @Content)
@@ -132,6 +132,23 @@ class EventController {
 			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());
 			throw e;
 		}
+	}
+
+	@Operation(summary = "Comprobar si existe evento", description = "Devuelve un true si el evento ya existe y un false si no existe previamente", tags = {
+			"event" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "El evento se ha encontrado", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EventResponseWithError.class)))),
+			@ApiResponse(responseCode = "404", description = "No hay evento encontrado", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Error genérico comprobador existencia evento", content = @Content) })
+
+	@GetMapping("/exists/{id}")
+	public ResponseEntity<?> eventFindById(@PathVariable Long id) {
+		if (eventService.eventFindById(id)) {
+			return ResponseEntity.ok(eventAdapter.toExitEventResponseWithError(true));
+		} else {
+			return ResponseEntity.ok(eventAdapter.toExitEventResponseWithError(false));
+		}
+
 	}
 
 }

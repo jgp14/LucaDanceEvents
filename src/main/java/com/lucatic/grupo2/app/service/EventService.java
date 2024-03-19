@@ -44,4 +44,11 @@ public interface EventService {
      * @throws EventExistException Gestiona este tipo de excepcion
      */
     Event save(EventRequest event) throws EventException;
+    
+    /**
+     * Comprueba si un objeto de tipo Event ya existe
+     * @param id identificador del evento
+     * @return Event
+     */
+	boolean eventFindById(long id);
 }
