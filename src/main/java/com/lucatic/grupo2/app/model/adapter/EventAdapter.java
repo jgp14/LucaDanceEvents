@@ -9,6 +9,7 @@ import java.util.List;
 import com.lucatic.grupo2.app.model.EnumPriceRange;
 import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
+import com.lucatic.grupo2.app.model.dto.EventExistResponseWithError;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
 import com.lucatic.grupo2.app.model.dto.EventResponse;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
@@ -129,9 +130,8 @@ public class EventAdapter {
 		}*/
 		return event;
 	}
-	/*
-	public  List<EventResponse> toEventResponse(List<Event> events) {
-		LOGGER.info("----- Evemtps:" + events);
-		return events.stream().map(p -> toEventResponse(p)).collect(Collectors.toList());
-	}*/
+
+	public EventExistResponseWithError toExitEventResponseWithError(boolean eventExist) {
+		return new EventExistResponseWithError(null, eventExist, false);
+	}
 }

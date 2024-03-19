@@ -80,6 +80,7 @@ public class EventServiceImpl implements EventService {
 
 	/**
 	 * Actualiza un evento concreto
+	 * 
 	 * @param event recibe un objeto Event preparado para actualzar
 	 * @return devuelve un Event actualizado
 	 */
@@ -87,8 +88,10 @@ public class EventServiceImpl implements EventService {
 	public Event update(Event event) {
 		return null;
 	}
+
 	/**
 	 * Elimina un objeto con un id determinado
+	 * 
 	 * @param id recibe un id de un objeto a borrar
 	 */
 	@Override
@@ -96,36 +99,45 @@ public class EventServiceImpl implements EventService {
 
 	}
 
-
 	/**
 	 * Metodo que guarda un evento concreto
+	 * 
 	 * @param eventRequest se encarga de coger datos tratables a guardar
 	 * @return devuelve un objeto tipo Event tratado
 	 */
-    @Override
-    public Event save(@Valid EventRequest eventRequest) throws EventException {
+	@Override
+	public Event save(@Valid EventRequest eventRequest) throws EventException {
 
 		if (eventRequest == null)
 			throw new EventException("Event request is null");
 
-        List<Room> rooms = new ArrayList<>();
+		List<Room> rooms = new ArrayList<>();
 
-        for (RoomRequest roomRequest: eventRequest.getRoomRequests()) {
-            Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
-            if (roomFound == null) {
-                roomFound = new Room(roomRequest.getName(),roomRequest.getCity(), roomRequest.getAddress(), roomRequest.getRoomType(), roomRequest.getCapacity());
-                roomRepository.save(roomFound);
-            }
-            rooms.add(roomFound);
-        }
+		for (RoomRequest roomRequest : eventRequest.getRoomRequests()) {
+			Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
+			if (roomFound == null) {
+				roomFound = new Room(roomRequest.getName(), roomRequest.getCity(), roomRequest.getAddress(),
+						roomRequest.getRoomType(), roomRequest.getCapacity());
+				roomRepository.save(roomFound);
+			}
+			rooms.add(roomFound);
+		}
 
-        Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
+		Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
 
-        for (EventRoom eventRoomAux: event.getEventRooms()) {
-            eventRoomAux.setEvent(event);
-        }
-        event = eventRepository.save(event);
+		for (EventRoom eventRoomAux : event.getEventRooms()) {
+			eventRoomAux.setEvent(event);
+		}
+		event = eventRepository.save(event);
 
-        return event;
-    }
+		return event;
+	}
+
+	@Override
+	public boolean eventFindById(long id) {
+		if (eventRepository.findById(id).isPresent()) {
+			return true;
+		}
+		return false;
+	}
 }
