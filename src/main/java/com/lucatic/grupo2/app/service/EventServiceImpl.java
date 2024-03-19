@@ -74,8 +74,8 @@ public class EventServiceImpl implements EventService {
 	 * @return devuelve un objeto tipo Event
 	 */
 	@Override
-	public Event findById(Long id) {
-		return null;
+	public Event findById(Long id) throws EventException {
+		return eventRepository.findById(id).orElseThrow(() -> new EventExistException("El evento no existe"));
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public Event update(Event event) {
-		return null;
+		return null; //TODO Implement
 	}
 
 	/**
@@ -96,38 +96,40 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public void deleteById(Long id) {
-
+		eventRepository.deleteById(id);
 	}
 
 	/**
 	 * Metodo que guarda un evento concreto
+	 * 
 	 * @param eventRequest se encarga de coger datos tratables a guarda
 	 * @throws EventException Si intenta dar de alta un evento nulo
 	 * @return devuelve un objeto tipo Event tratado
 	 */
-    @Override
-    public Event save(@Valid EventRequest eventRequest) throws EventException {
+	@Override
+	public Event save(@Valid EventRequest eventRequest) throws EventException {
 
 		if (eventRequest == null)
 			throw new EventException("Event request is null");
 
-        List<Room> rooms = new ArrayList<>();
+		List<Room> rooms = new ArrayList<>();
 
-        for (RoomRequest roomRequest: eventRequest.getRoomRequests()) {
-            Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
-            if (roomFound == null) {
-                roomFound = new Room(roomRequest.getName(),roomRequest.getCity(), roomRequest.getAddress(), roomRequest.getRoomType(), roomRequest.getCapacity());
-                roomRepository.save(roomFound);
-            }
-            rooms.add(roomFound);
-        }
+		for (RoomRequest roomRequest : eventRequest.getRoomRequests()) {
+			Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
+			if (roomFound == null) {
+				roomFound = new Room(roomRequest.getName(), roomRequest.getCity(), roomRequest.getAddress(),
+						roomRequest.getRoomType(), roomRequest.getCapacity());
+				roomRepository.save(roomFound);
+			}
+			rooms.add(roomFound);
+		}
 
-        Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
+		Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
 
-        for (EventRoom eventRoomAux: event.getEventRooms()) {
-            eventRoomAux.setEvent(event);
-        }
-        event = eventRepository.save(event);
+		for (EventRoom eventRoomAux : event.getEventRooms()) {
+			eventRoomAux.setEvent(event);
+		}
+		event = eventRepository.save(event);
 
 		return event;
 	}
