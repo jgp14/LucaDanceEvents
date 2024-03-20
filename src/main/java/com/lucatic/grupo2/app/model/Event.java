@@ -1,6 +1,5 @@
 package com.lucatic.grupo2.app.model;
 
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -71,9 +70,9 @@ public class Event {
 	/** Reglas del evento */
 	private String rules;
 
-
 	/**
 	 * Añadir eventroom
+	 * 
 	 * @param eventRoom el event room
 	 */
 	public void addEventRoom(EventRoom eventRoom) {

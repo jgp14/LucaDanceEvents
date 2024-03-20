@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
 /**
  * Clase modelo DTO RoomRequest para peticiones en relacion con salas. Posee los
  * getters, setters, toString y constuctores generados por Lombok @Data.

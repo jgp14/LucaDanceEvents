@@ -12,6 +12,7 @@ import com.lucatic.grupo2.app.repository.EventRepository;
 import com.lucatic.grupo2.app.repository.EventRoomRepository;
 import com.lucatic.grupo2.app.repository.RoomRepository;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,8 +74,8 @@ public class EventServiceImpl implements EventService {
 	 * @return devuelve un objeto tipo Event
 	 */
 	@Override
-	public Event findById(Long id) {
-		return null;
+	public Event findById(Long id) throws EventException {
+		return eventRepository.findById(id).orElseThrow(() -> new EventExistException("El evento no existe"));
 	}
 
 	/**
@@ -82,10 +83,21 @@ public class EventServiceImpl implements EventService {
 	 *
 	 * @param event recibe un objeto Event preparado para actualzar
 	 * @return devuelve un Event actualizado
+	 * @throws EventException
 	 */
 	@Override
-	public Event update(Event event) {
-		return null;
+	public Event update(Event event) throws EventException {
+		Event eventExisting = findById(event.getId());
+		eventExisting.setName(event.getName());
+		eventExisting.setShortDescription(event.getShortDescription());
+		eventExisting.setLongDescription(event.getLongDescription());
+		eventExisting.setPhoto(event.getPhoto());
+		eventExisting.setInitDate(event.getInitDate());
+		eventExisting.setEndDate(event.getEndDate());
+		eventExisting.setTimeOpen(event.getTimeOpen());
+		eventExisting.setPrice(event.getPrice());
+
+		return eventRepository.save(eventExisting);
 	}
 
 	/**
@@ -95,38 +107,40 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public void deleteById(Long id) {
-
+		eventRepository.deleteById(id);
 	}
 
 	/**
 	 * Metodo que guarda un evento concreto
+	 * 
 	 * @param eventRequest se encarga de coger datos tratables a guarda
 	 * @throws EventException Si intenta dar de alta un evento nulo
 	 * @return devuelve un objeto tipo Event tratado
 	 */
-    @Override
-    public Event save(@Valid EventRequest eventRequest) throws EventException {
+	@Override
+	public Event save(@Valid EventRequest eventRequest) throws EventException {
 
 		if (eventRequest == null)
 			throw new EventException("Event request is null");
 
-        List<Room> rooms = new ArrayList<>();
+		List<Room> rooms = new ArrayList<>();
 
-        for (RoomRequest roomRequest: eventRequest.getRoomRequests()) {
-            Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
-            if (roomFound == null) {
-                roomFound = new Room(roomRequest.getName(),roomRequest.getCity(), roomRequest.getAddress(), roomRequest.getRoomType(), roomRequest.getCapacity());
-                roomRepository.save(roomFound);
-            }
-            rooms.add(roomFound);
-        }
+		for (RoomRequest roomRequest : eventRequest.getRoomRequests()) {
+			Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
+			if (roomFound == null) {
+				roomFound = new Room(roomRequest.getName(), roomRequest.getCity(), roomRequest.getAddress(),
+						roomRequest.getRoomType(), roomRequest.getCapacity());
+				roomRepository.save(roomFound);
+			}
+			rooms.add(roomFound);
+		}
 
-        Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
+		Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
 
-        for (EventRoom eventRoomAux: event.getEventRooms()) {
-            eventRoomAux.setEvent(event);
-        }
-        event = eventRepository.save(event);
+		for (EventRoom eventRoomAux : event.getEventRooms()) {
+			eventRoomAux.setEvent(event);
+		}
+		event = eventRepository.save(event);
 
 		return event;
 	}

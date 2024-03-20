@@ -58,21 +58,14 @@ public class EventAdapter {
 		eventResponse.setRules(event.getRules());
 
 		List<RoomResponse> roomResponses = new ArrayList<>();
-		for (EventRoom er: event.getEventRooms()) {
-			roomResponses.add(
-					new RoomResponse(
-							er.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-							er.getInitTime().format(DateTimeFormatter.ofPattern("HH:mm")),
-							er.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")),
-							er.getRoom().getName(),
-							er.getRoom().getCity(),
-							er.getRoom().getAddress(),
-							er.getRoom().getRoomType(),
-							er.getRoom().getCapacity()
-							));
+		for (EventRoom er : event.getEventRooms()) {
+			roomResponses.add(new RoomResponse(er.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+					er.getInitTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+					er.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")), er.getRoom().getName(),
+					er.getRoom().getCity(), er.getRoom().getAddress(), er.getRoom().getRoomType(),
+					er.getRoom().getCapacity()));
 		}
 		eventResponse.setRoomResponses(roomResponses);
-
 
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setEventResponse(eventResponse);
@@ -88,7 +81,6 @@ public class EventAdapter {
 	 */
 	public Event fromEventRequest(EventRequest eventRequest, List<Room> rooms) {
 
-
 		Event event = new Event();
 		event.setName(eventRequest.getName());
 		event.setShortDescription(eventRequest.getShortDescription());
@@ -100,18 +92,16 @@ public class EventAdapter {
 		event.setPrice(EnumPriceRange.valueOf(eventRequest.getPrice()));
 		event.setRules(eventRequest.getRules());
 
-
 		List<EventRoom> eventRooms = new ArrayList<>();
 		for (int i = 0; i < eventRequest.getRoomRequests().size(); ++i) {
-			eventRooms.add(
-					new EventRoom(
-					event,
-					rooms.get(i),
-					LocalDate.parse(eventRequest.getRoomRequests().get(i).getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-					LocalTime.parse(eventRequest.getRoomRequests().get(i).getInitTime(), DateTimeFormatter.ofPattern("HH:mm")),
-					LocalTime.parse(eventRequest.getRoomRequests().get(i).getEndTime(), DateTimeFormatter.ofPattern("HH:mm"))));
+			eventRooms.add(new EventRoom(event, rooms.get(i),
+					LocalDate.parse(eventRequest.getRoomRequests().get(i).getDate(),
+							DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+					LocalTime.parse(eventRequest.getRoomRequests().get(i).getInitTime(),
+							DateTimeFormatter.ofPattern("HH:mm")),
+					LocalTime.parse(eventRequest.getRoomRequests().get(i).getEndTime(),
+							DateTimeFormatter.ofPattern("HH:mm"))));
 		}
-
 
 		event.setEventRooms(eventRooms);
 

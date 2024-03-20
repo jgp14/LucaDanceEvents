@@ -37,77 +37,78 @@ import java.time.LocalTime;
 @Table(name = "event_room")
 public class EventRoom {
 
-    /**
-     * Atributo Long id autoincremental de los eventos_salas.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/**
+	 * Atributo Long id autoincremental de los eventos_salas.
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    /**
-     * Atributo Event que recoge el evento y su clave forarena. Esta
-     * mapeado @ManyToOne
-     */
-    @ManyToOne
-    @JoinColumn
-    @JsonBackReference
-    private Event event;
+	/**
+	 * Atributo Event que recoge el evento y su clave forarena. Esta
+	 * mapeado @ManyToOne
+	 */
+	@ManyToOne
+	@JoinColumn
+	@JsonBackReference
+	private Event event;
 
-    /**
-     * Atributo Room que recoge la sala y su clave forarena. Esta mapeado @OneToOne
-     * con limitacion @JsonManagedReference
-     */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Room room;
+	/**
+	 * Atributo Room que recoge la sala y su clave forarena. Esta mapeado @OneToOne
+	 * con limitacion @JsonManagedReference
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private Room room;
 
-    /** La fecha de la sala */
-    private LocalDate date;
+	/** La fecha de la sala */
+	private LocalDate date;
 
-    /** La hora de inicio de la sala */
-    private LocalTime initTime;
+	/** La hora de inicio de la sala */
+	private LocalTime initTime;
 
-    /** La hora de fin de la sala */
-    private LocalTime endTime;
+	/** La hora de fin de la sala */
+	private LocalTime endTime;
 
-    /**
-     * Constructor EventRoom
-     *
-     * @param event Entidad con el evento introducido.
-     * @param room  Entidad con la sala introducido.
-     */
-    public EventRoom(Event event, Room room) {
-        this.event = event;
-        this.room = room;
-    }
+	/**
+	 * Constructor EventRoom
+	 *
+	 * @param event Entidad con el evento introducido.
+	 * @param room  Entidad con la sala introducido.
+	 */
+	public EventRoom(Event event, Room room) {
+		this.event = event;
+		this.room = room;
+	}
 
-    /**
-     * Constructor EventRoom
-     *
-     * @param event Entidad con el evento introducido.
-     */
-    public EventRoom(Event event) {
-        this.event = event;
-    }
+	/**
+	 * Constructor EventRoom
+	 *
+	 * @param event Entidad con el evento introducido.
+	 */
+	public EventRoom(Event event) {
+		this.event = event;
+	}
 
-    public EventRoom(LocalTime initTime, LocalTime endTime) {
-        this.initTime = initTime;
-        this.endTime = endTime;
-    }
+	public EventRoom(LocalTime initTime, LocalTime endTime) {
+		this.initTime = initTime;
+		this.endTime = endTime;
+	}
 
-    /**
-     * Constructor con parámetros
-     * @param event El evento
-     * @param room La sala
-     * @param date La fecha
-     * @param initTime La hora de inicio
-     * @param endTime la hora de fin
-     */
-    public EventRoom(Event event, Room room, LocalDate date, LocalTime initTime, LocalTime endTime) {
-        this.event = event;
-        this.room = room;
-        this.date = date;
-        this.initTime = initTime;
-        this.endTime = endTime;
-    }
+	/**
+	 * Constructor con parámetros
+	 * 
+	 * @param event    El evento
+	 * @param room     La sala
+	 * @param date     La fecha
+	 * @param initTime La hora de inicio
+	 * @param endTime  la hora de fin
+	 */
+	public EventRoom(Event event, Room room, LocalDate date, LocalTime initTime, LocalTime endTime) {
+		this.event = event;
+		this.room = room;
+		this.date = date;
+		this.initTime = initTime;
+		this.endTime = endTime;
+	}
 }

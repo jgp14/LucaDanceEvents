@@ -17,6 +17,7 @@ public class EventsGrupo2Application {
 
 	/**
 	 * Punto de entrada al programa principal
+	 * 
 	 * @param args ARgumentos por línea de comandos
 	 */
 	public static void main(String[] args) {
