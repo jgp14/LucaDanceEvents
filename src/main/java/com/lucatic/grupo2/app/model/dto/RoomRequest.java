@@ -42,23 +42,15 @@ public class RoomRequest {
 	private Integer capacity;
 
 
-	/**
-	 * Atributo string con la fecha de la sala parseada.
-	 */
+	/** Atributo string con la fecha de la sala parseada. */
 	@NotEmpty
 	private String date;
 
-	/**
-	 * Atributo string con la fecha inicial parseada del evento en la sala
-	 */
+	/** Atributo string con la fecha inicial parseada del evento en la sala */
 	@NotEmpty
 	private String initTime;
 
-	/**
-	 * Atributo string con la fecha final parseada del evento en la sala
-	 */
+	/** Atributo string con la fecha final parseada del evento en la sala  */
 	@NotEmpty
 	private String endTime;
-
-
 }

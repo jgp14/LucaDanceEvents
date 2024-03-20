@@ -109,6 +109,7 @@ public class EventAdapter {
 	}
 
 	public EventExistResponseWithError toExitEventResponseWithError(boolean eventExist) {
+		LOGGER.info("EventExistResponseWithError: " + eventExist);
 		return new EventExistResponseWithError(null, eventExist, false);
 	}
 }
