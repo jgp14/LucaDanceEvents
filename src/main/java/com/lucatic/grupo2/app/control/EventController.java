@@ -25,7 +25,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.datasource.UserCredentialsDataSourceAdapter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -144,8 +143,10 @@ class EventController {
 	@GetMapping("/exists/{id}")
 	public ResponseEntity<?> eventFindById(@PathVariable Long id) {
 		if (eventService.eventFindById(id)) {
+			LOGGER.info("Event found with id: " +id.toString());
 			return ResponseEntity.ok(eventAdapter.toExitEventResponseWithError(true));
 		} else {
+			LOGGER.info("Event not found");
 			return ResponseEntity.ok(eventAdapter.toExitEventResponseWithError(false));
 		}
 

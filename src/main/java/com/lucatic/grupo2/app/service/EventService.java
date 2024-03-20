@@ -31,7 +31,7 @@ public interface EventService {
      * @param event recibe un evento de parametro a actualizar
      * @return comprueba que el evento este actualizado
      */
-    Event update(Event event);
+    Event update(Event event) throws EventException;
     /**
      * Elimina un registro de la base de datos con un objeto que tiene el id de parametro
      * @param id parametro de un registro a borrar

@@ -13,6 +13,7 @@ import com.lucatic.grupo2.app.repository.EventRepository;
 import com.lucatic.grupo2.app.repository.EventRoomRepository;
 import com.lucatic.grupo2.app.repository.RoomRepository;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,10 +84,21 @@ public class EventServiceImpl implements EventService {
 	 *
 	 * @param event recibe un objeto Event preparado para actualzar
 	 * @return devuelve un Event actualizado
+	 * @throws EventException
 	 */
 	@Override
-	public Event update(Event event) {
-		return null; //TODO Implement
+	public Event update(Event event) throws EventException {
+		Event eventExisting = findById(event.getId());
+		eventExisting.setName(event.getName());
+		eventExisting.setShortDescription(event.getShortDescription());
+		eventExisting.setLongDescription(event.getLongDescription());
+		eventExisting.setPhoto(event.getPhoto());
+		eventExisting.setInitDate(event.getInitDate());
+		eventExisting.setEndDate(event.getEndDate());
+		eventExisting.setTimeOpen(event.getTimeOpen());
+		eventExisting.setPrice(event.getPrice());
+
+		return eventRepository.save(eventExisting);
 	}
 
 	/**

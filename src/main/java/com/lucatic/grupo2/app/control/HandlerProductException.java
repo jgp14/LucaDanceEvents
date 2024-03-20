@@ -4,7 +4,9 @@ import com.lucatic.grupo2.app.exceptions.EmptyListException;
 import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Error;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
-import jakarta.xml.bind.ValidationException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -26,6 +28,11 @@ import java.time.LocalDateTime;
 public class HandlerProductException {
 
 	/**
+	 * Logger que registra los errores de clase HandlerProductException
+	 */
+	private final static Logger LOGGER = LogManager.getLogger(HandlerProductException.class);
+
+	/**
 	 * Error método error de ejecucion generico.
 	 *
 	 * @param e La excepción de ejecucion.
@@ -42,6 +49,7 @@ public class HandlerProductException {
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
+		LOGGER.warn(error.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
@@ -63,6 +71,7 @@ public class HandlerProductException {
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
+		LOGGER.warn(error.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
@@ -77,6 +86,7 @@ public class HandlerProductException {
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
+		LOGGER.warn(error.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
@@ -97,6 +107,7 @@ public class HandlerProductException {
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
 		// return ResponseEntity.internalServerError().body(error);
+		LOGGER.warn(error.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
@@ -117,6 +128,7 @@ public class HandlerProductException {
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
 		// return ResponseEntity.internalServerError().body(error);
+		LOGGER.warn(error.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
@@ -137,6 +149,7 @@ public class HandlerProductException {
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
 		// return ResponseEntity.internalServerError().body(error);
+		LOGGER.warn(error.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 
@@ -157,6 +170,7 @@ public class HandlerProductException {
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
 		// return ResponseEntity.internalServerError().body(error);
+		LOGGER.warn(error.getMessage() + " " + e.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
 }

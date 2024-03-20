@@ -5,9 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,7 +43,6 @@ public class Room {
 	 */
 	private String city;
 
-
 	/**
 	 * Atributo string con la direcion postal exacta de la sala.
 	 */
@@ -63,10 +59,11 @@ public class Room {
 	private Integer capacity;
 
 	/**
-	 * Constuctor personalidado 
-	 * @param name de la sala
-	 * @param city de la sala
-	 * @param address de la sala
+	 * Constuctor personalidado
+	 * 
+	 * @param name     de la sala
+	 * @param city     de la sala
+	 * @param address  de la sala
 	 * @param roomType de la sala
 	 * @param capacity de la sala
 	 */
@@ -78,6 +75,5 @@ public class Room {
 		this.roomType = roomType;
 		this.capacity = capacity;
 	}
-	
-	
+
 }
