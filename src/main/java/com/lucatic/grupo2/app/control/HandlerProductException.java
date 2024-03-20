@@ -4,7 +4,6 @@ import com.lucatic.grupo2.app.exceptions.EmptyListException;
 import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Error;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
-import jakarta.xml.bind.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -152,11 +151,11 @@ public class HandlerProductException {
 		error.setDate(LocalDateTime.now());
 		error.setError("Error en la URL");
 		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
-		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
 		// return ResponseEntity.internalServerError().body(error);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
+		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED.value()).body(eventResponseWithError);
 	}
 }
