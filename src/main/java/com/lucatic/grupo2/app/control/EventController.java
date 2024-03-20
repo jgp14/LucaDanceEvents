@@ -132,7 +132,13 @@ class EventController {
 			throw e;
 		}
 	}
-
+	
+	/**
+     * Comprueba si un evento existe por su ID.
+     *
+     * @param id ID del evento a comprobar
+     * @return ResponseEntity con el resultado de la comprobación
+     */
 	@Operation(summary = "Comprobar si existe evento", description = "Devuelve un true si el evento ya existe y un false si no existe previamente", tags = {
 			"event" })
 	@ApiResponses(value = {
