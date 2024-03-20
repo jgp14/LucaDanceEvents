@@ -165,12 +165,12 @@ public class HandlerProductException {
 		error.setDate(LocalDateTime.now());
 		error.setError("Error en la URL");
 		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
-		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
 		eventResponseWithError.setErrorBool(true);
 		// return ResponseEntity.internalServerError().body(error);
 		LOGGER.warn(error.getMessage() + " " + e.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
+		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED.value()).body(eventResponseWithError);
 	}
 }

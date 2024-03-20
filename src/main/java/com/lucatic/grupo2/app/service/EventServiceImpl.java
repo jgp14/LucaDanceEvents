@@ -2,7 +2,6 @@ package com.lucatic.grupo2.app.service;
 
 import com.lucatic.grupo2.app.exceptions.EmptyListException;
 import com.lucatic.grupo2.app.exceptions.EventException;
-import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Event;
 import com.lucatic.grupo2.app.model.EventRoom;
 import com.lucatic.grupo2.app.model.Room;
