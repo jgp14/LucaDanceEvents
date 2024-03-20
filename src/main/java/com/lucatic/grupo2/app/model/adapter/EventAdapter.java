@@ -115,6 +115,7 @@ public class EventAdapter {
      * @return EventExistResponseWithError La respuesta que indica si el evento existe y posiblemente errores.
      */
 	public EventExistResponseWithError toExitEventResponseWithError(boolean eventExist) {
+		LOGGER.info("EventExistResponseWithError: " + eventExist);
 		return new EventExistResponseWithError(null, eventExist, false);
 	}
 }
