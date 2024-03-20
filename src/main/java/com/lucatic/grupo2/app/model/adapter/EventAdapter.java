@@ -107,7 +107,13 @@ public class EventAdapter {
 
 		return event;
 	}
-
+	
+	/**
+     * Convierte un booleano que indica si un evento existe en una respuesta de evento de salida con error.
+     *
+     * @param eventExist Booleano que indica si el evento existe.
+     * @return EventExistResponseWithError La respuesta que indica si el evento existe y posiblemente errores.
+     */
 	public EventExistResponseWithError toExitEventResponseWithError(boolean eventExist) {
 		LOGGER.info("EventExistResponseWithError: " + eventExist);
 		return new EventExistResponseWithError(null, eventExist, false);

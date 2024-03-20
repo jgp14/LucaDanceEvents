@@ -74,7 +74,13 @@ public class HandlerProductException {
 		LOGGER.warn(error.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
 	}
-
+	
+	 /**
+     * Maneja excepciones de argumentos de método no válidos.
+     *
+     * @param e La excepción de argumentos de método no válidos
+     * @return ResponseEntity con la respuesta de error
+     */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<EventResponseWithError> errorGenericoRuntime(MethodArgumentNotValidException e) {
 		Error error = new Error();
