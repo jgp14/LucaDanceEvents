@@ -15,6 +15,7 @@ import com.lucatic.grupo2.app.model.dto.EventResponse;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
 
 import com.lucatic.grupo2.app.model.dto.RoomResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -107,15 +108,38 @@ public class EventAdapter {
 
 		return event;
 	}
-	
+
 	/**
-     * Convierte un booleano que indica si un evento existe en una respuesta de evento de salida con error.
-     *
-     * @param eventExist Booleano que indica si el evento existe.
-     * @return EventExistResponseWithError La respuesta que indica si el evento existe y posiblemente errores.
-     */
+	 * Convierte un booleano que indica si un evento existe en una respuesta de
+	 * evento de salida con error.
+	 *
+	 * @param eventExist Booleano que indica si el evento existe.
+	 * @return EventExistResponseWithError La respuesta que indica si el evento
+	 *         existe y posiblemente errores.
+	 */
 	public EventExistResponseWithError toExitEventResponseWithError(boolean eventExist) {
 		LOGGER.info("EventExistResponseWithError: " + eventExist);
 		return new EventExistResponseWithError(null, eventExist, false);
+	}
+
+	public EventResponse toEventResponse(Event event) {
+		List<RoomResponse> roomResponses = new ArrayList<>();
+		for (EventRoom er : event.getEventRooms()) {
+			roomResponses.add(new RoomResponse(er.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+					er.getInitTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+					er.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm")), er.getRoom().getName(),
+					er.getRoom().getCity(), er.getRoom().getAddress(), er.getRoom().getRoomType(),
+					er.getRoom().getCapacity()));
+		}
+		return new EventResponse(event.getId(), 
+				event.getName(), 
+				event.getShortDescription(), 
+				event.getLongDescription(), 
+				event.getPhoto(),
+				event.getRules(),
+				event.getInitDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+				,event.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+				event.getTimeOpen().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+				roomResponses);
 	}
 }
