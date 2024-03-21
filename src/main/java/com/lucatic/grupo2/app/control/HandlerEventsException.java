@@ -43,7 +43,7 @@ public class HandlerEventsException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error procesando petición");
-		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
+		error.setMessage("Error del tipo genérico");
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		// return ResponseEntity.internalServerError().body(error);
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
@@ -65,7 +65,7 @@ public class HandlerEventsException {
 		error.setDate(LocalDateTime.now());
 		error.setError("Error genérico procesando petición");
 		error.setMessage(e.getClass().getCanonicalName());
-		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
+		error.setMessage("Error del tipo genérico");
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		// return ResponseEntity.internalServerError().body(error);
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
@@ -86,7 +86,7 @@ public class HandlerEventsException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error en los datos del cliente, compruebelos");
-		error.setMessage("Error del tipo " + e.getClass().getSimpleName() + " " + e.getMessage().split(":")[1]);
+		error.setMessage(e.getMessage().split(":")[1]);
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		// return ResponseEntity.internalServerError().body(error);
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
@@ -107,7 +107,7 @@ public class HandlerEventsException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error ya existe el evento");
-		error.setMessage("Error del tipo " + e.getClass().getSimpleName() + " " + e.getMessage());
+		error.setMessage( e.getMessage());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
@@ -128,7 +128,7 @@ public class HandlerEventsException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error la lista está vacía");
-		error.setMessage("Error del tipo " + e.getClass().getSimpleName() + " " + e.getMessage());
+		error.setMessage(e.getMessage());
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
@@ -149,7 +149,7 @@ public class HandlerEventsException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error en la URL");
-		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
+		error.setMessage("Error encontrando manejador para petición");
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
@@ -170,7 +170,7 @@ public class HandlerEventsException {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error en la URL");
-		error.setMessage("Error del tipo " + e.getClass().getSimpleName());
+		error.setMessage("Error obteniendo método de procesado de petición");
 		error.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
 		EventResponseWithError eventResponseWithError = new EventResponseWithError();
 		eventResponseWithError.setError(error);
