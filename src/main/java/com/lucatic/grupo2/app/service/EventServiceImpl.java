@@ -84,21 +84,38 @@ public class EventServiceImpl implements EventService {
 	 *
 	 * @param event recibe un objeto Event preparado para actualzar
 	 * @return devuelve un Event actualizado
-	 * @throws EventException
+	 * @throws EventException cuadno se produce una exepcion.
 	 */
 	@Override
-	public Event update(Event event) throws EventException {
-		Event eventExisting = findById(event.getId());
-		eventExisting.setName(event.getName());
-		eventExisting.setShortDescription(event.getShortDescription());
-		eventExisting.setLongDescription(event.getLongDescription());
-		eventExisting.setPhoto(event.getPhoto());
-		eventExisting.setInitDate(event.getInitDate());
-		eventExisting.setEndDate(event.getEndDate());
-		eventExisting.setTimeOpen(event.getTimeOpen());
-		eventExisting.setPrice(event.getPrice());
+	public Event update(EventRequest eventRequest, Long id) throws EventException {
 
-		return eventRepository.save(eventExisting);
+		if (eventRequest == null)
+			throw new EventException("Event request is null");
+
+		Event eventExisting = findById(id);
+
+		if (eventExisting == null) {
+			throw new EventExistException("Event not found in eventdb");
+		}
+		List<Room> rooms = new ArrayList<>();
+
+		for (RoomRequest roomRequest : eventRequest.getRoomRequests()) {
+			Room roomFound = roomRepository.findRoomByNameAndAddress(roomRequest.getName(), roomRequest.getAddress());
+			if (roomFound == null) {
+				roomFound = new Room(roomRequest.getName(), roomRequest.getCity(), roomRequest.getAddress(),
+						roomRequest.getRoomType(), roomRequest.getCapacity());
+				roomRepository.save(roomFound);
+			}
+			rooms.add(roomFound);
+		}
+
+		Event event = eventAdapter.fromEventRequest(eventRequest, rooms);
+		for (EventRoom eventRoomAux : event.getEventRooms()) {
+			eventRoomAux.setEvent(event);
+		}
+		event.setId(id);
+		event = eventRepository.saveAndFlush(event);
+		return event;
 	}
 
 	/**
@@ -107,7 +124,9 @@ public class EventServiceImpl implements EventService {
 	 * @param id recibe un id de un objeto a borrar
 	 */
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(Long id) throws EventException {
+		if (id == null)
+			throw new EventException("IlegalArgumentException: id de evento a borrar es nulo. ");
 		eventRepository.deleteById(id);
 	}
 
