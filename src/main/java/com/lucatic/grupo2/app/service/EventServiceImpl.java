@@ -170,14 +170,27 @@ public class EventServiceImpl implements EventService {
 		return event;
 	}
 
+	/**
+	 * Comprueba si un objeto de tipo Event ya existe
+	 * 
+	 * @param id identificador del evento
+	 * @return boolean si se encontro o no el evento.
+	 */
 	@Override
-	public boolean eventFindById(long id) {
+	public boolean eventFindById(Long id) {
 		if (eventRepository.findById(id).isPresent()) {
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Devuelve lista de eventos buscados por nombre
+	 * 
+	 * @param name de los eventos a buscar
+	 * @return List<Event> listado de eventos con nombre igual
+	 * @throws EmptyListException cuando la lista de eventos esta vacia.
+	 */
 	@Override
 	public List<Event> findByName(String name) throws EmptyListException {
 		List<Event> events = eventRepository.findEventByNameContainingIgnoreCase(name);
@@ -185,5 +198,22 @@ public class EventServiceImpl implements EventService {
 			throw new EmptyListException("Lista de eventos vacía");
 		else
 			return events;
+	}
+
+	/**
+	 * Devuelve lista de eventos buscados por genero de evento
+	 * 
+	 * @param roomType nombre o tipo genero de los eventos a buscar
+	 * @return List<Event> listado de eventos con el mismo genero.
+	 * @throws EmptyListException cuando la lista de eventos esta vacia.
+	 */
+	@Override
+	public List<Event> findEventsByRoomType(String roomType) throws EmptyListException {
+		List<Event> events = eventRepository.findEventsByRoomType(roomType);
+		if (events.isEmpty()) {
+			throw new EmptyListException("Lista de eventos vacía");
+		} else {
+			return events;
+		}
 	}
 }

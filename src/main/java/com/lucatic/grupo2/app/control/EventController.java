@@ -273,4 +273,34 @@ class EventController {
 		}
 	}
 
+	/**
+	 * Lista los eventos por genero de evento guardados en la bbdd
+	 * 
+	 * @return ResponseEntity con el response de eventos
+	 * @throws EmptyListException cuando no devuelve elementos de la lista
+	 */
+	@Operation(summary = "Listar los eventos por roomType", description = "Devuelve un listado los eventos de un genero concreto", tags = {
+			"event" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Eventos listados con tipo o genero concreto", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EventResponseWithErrorList.class)))),
+			@ApiResponse(responseCode = "404", description = "No hay eventos con ese genero", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Error genérico listando eventos", content = @Content)
+
+	})
+	@GetMapping("eventsbyroom/{roomType}")
+	public ResponseEntity<?> listEventsByRoomType(@Valid @PathVariable String roomType) throws EventException {
+		try {
+			List<Event> events = eventService.findEventsByRoomType(roomType);
+			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u))
+					.collect(Collectors.toList());
+			EventResponseWithErrorList eventResponseWithErrorList = new EventResponseWithErrorList();
+			eventResponseWithErrorList.setEventResponse(eventResponses);
+			LOGGER.info("Find all events with roomType: " + roomType);
+			return ResponseEntity.ok(eventResponseWithErrorList);
+		} catch (EmptyListException e) {
+			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());
+			throw e;
+		}
+	}
+
 }
