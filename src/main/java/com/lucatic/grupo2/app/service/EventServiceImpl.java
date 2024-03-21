@@ -62,7 +62,10 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public List<Event> findAll() throws EmptyListException {
+
+
 		List<Event> events = eventRepository.findAll();
+
 		if (events.isEmpty())
 			throw new EmptyListException("Lista de eventos vacía");
 		else
