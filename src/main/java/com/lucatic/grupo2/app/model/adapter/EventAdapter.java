@@ -137,9 +137,9 @@ public class EventAdapter {
 				event.getLongDescription(), 
 				event.getPhoto(),
 				event.getRules(),
-				event.getInitDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
-				,event.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
-				event.getTimeOpen().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+				event.getInitDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				,event.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+				event.getTimeOpen().format(DateTimeFormatter.ofPattern("HH:mm")),
 				roomResponses);
 	}
 }
