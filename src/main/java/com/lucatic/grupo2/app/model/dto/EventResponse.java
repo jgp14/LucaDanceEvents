@@ -1,8 +1,11 @@
 package com.lucatic.grupo2.app.model.dto;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lucatic.grupo2.app.model.EventRoom;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -85,4 +88,5 @@ public class EventResponse implements Serializable {
 	public void addRoomResponse(RoomResponse roomResponse) {
 		roomResponses.add(roomResponse);
 	}
+
 }

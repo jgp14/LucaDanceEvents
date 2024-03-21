@@ -8,11 +8,11 @@ import com.lucatic.grupo2.app.exceptions.EventException;
 import com.lucatic.grupo2.app.model.Event;
 import com.lucatic.grupo2.app.model.adapter.EventAdapter;
 import com.lucatic.grupo2.app.model.dto.EventRequest;
-
+import com.lucatic.grupo2.app.model.dto.EventResponse;
 import com.lucatic.grupo2.app.exceptions.EmptyListException;
 
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
-
+import com.lucatic.grupo2.app.model.dto.EventResponseWithErrorList;
 import com.lucatic.grupo2.app.service.EventService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -111,12 +111,12 @@ class EventController {
 	@Operation(summary = "Listar todos los eventos", description = "Devuelve un listado de todos los eventos existentes", tags = {
 			"event" })
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Events listados", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EventResponseWithError.class)))),
+			@ApiResponse(responseCode = "200", description = "Events listados", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EventResponseWithErrorList.class)))),
 			@ApiResponse(responseCode = "404", description = "No hay evenntos", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error genérico listando eventos", content = @Content)
 
 	})
-	@GetMapping("/all")
+	/*@GetMapping("/all")
 	public ResponseEntity<?> listAll() throws EmptyListException {
 
 		try {
@@ -126,6 +126,22 @@ class EventController {
 
 			LOGGER.info("Find all success");
 			return ResponseEntity.ok(eventsResponseWithError);
+
+		} catch (EmptyListException e) {
+			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());
+			throw e;
+		}
+	}*/
+	@GetMapping("/all")
+	public ResponseEntity<?> listAll() throws EmptyListException {
+
+		try {
+			List<Event> events = eventService.findAll();
+			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u)).collect(Collectors.toList());
+			EventResponseWithErrorList eventResponseWithErrorList = new EventResponseWithErrorList();
+			eventResponseWithErrorList.setEventResponse(eventResponses);
+			LOGGER.info("Find all success");
+			return ResponseEntity.ok(eventResponseWithErrorList);
 
 		} catch (EmptyListException e) {
 			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());
