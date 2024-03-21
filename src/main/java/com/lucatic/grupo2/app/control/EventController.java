@@ -287,7 +287,7 @@ class EventController {
 			@ApiResponse(responseCode = "500", description = "Error genérico listando eventos", content = @Content)
 
 	})
-	@GetMapping("eventsbyroom/{roomType}")
+	@GetMapping("/eventsbyroom/{roomType}")
 	public ResponseEntity<?> listEventsByRoomType(@PathVariable String roomType) throws EventException {
 		try {
 			List<Event> events = eventService.findEventsByRoomType(roomType);
@@ -303,7 +303,7 @@ class EventController {
 		}
 	}
 
-	@GetMapping("eventsByCity/{city}")
+	@GetMapping("/eventsByCity/{city}")
 	public ResponseEntity<?> listEventsByCity(@PathVariable String cityName) throws EventException {
 		try {
 			List<Event> events = eventService.findEventsByCity(cityName);
