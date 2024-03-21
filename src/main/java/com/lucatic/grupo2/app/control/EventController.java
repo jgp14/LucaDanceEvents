@@ -303,7 +303,7 @@ class EventController {
 		}
 	}
 
-	@GetMapping("eventsByCity/{city}")
+	@GetMapping("/eventsByCity/{cityName}")
 	public ResponseEntity<?> listEventsByCity(@PathVariable String cityName) throws EventException {
 		try {
 			List<Event> events = eventService.findEventsByCity(cityName);
