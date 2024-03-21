@@ -25,12 +25,12 @@ import java.time.LocalDateTime;
  * @since 15-03-2024
  */
 @RestControllerAdvice
-public class HandlerProductException {
+public class HandlerEventsException {
 
 	/**
 	 * Logger que registra los errores de clase HandlerProductException
 	 */
-	private final static Logger LOGGER = LogManager.getLogger(HandlerProductException.class);
+	private final static Logger LOGGER = LogManager.getLogger(HandlerEventsException.class);
 
 	/**
 	 * Error método error de ejecucion generico.
