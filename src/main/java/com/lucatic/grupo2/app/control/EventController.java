@@ -193,7 +193,7 @@ class EventController {
 			@ApiResponse(responseCode = "500", description = "Error genérico en edicion de evento", content = @Content)
 
 	})
-	@PutMapping("/edit/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody @Valid EventRequest eventRequest, @PathVariable Long id)
 			throws EventException {
 		try {
@@ -227,11 +227,13 @@ class EventController {
 			@ApiResponse(responseCode = "500", description = "Error genérico en borrado de evento", content = @Content)
 
 	})
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) throws EventException {
 		try {
-			eventService.deleteById(id);
-			return ResponseEntity.ok(id);
+			Event event = eventService.deleteById(id);
+			LOGGER.info("Event " + event.getName() + " with id " + event.getId() + " has been deleted");
+			return ResponseEntity.ok().body(eventAdapter.toEventResponseWithError(event));
+
 		} catch (EventExistException e) {
 			LOGGER.warn("Error deleting the event" + e.getMessage());
 			throw e;

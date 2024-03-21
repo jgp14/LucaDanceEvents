@@ -36,7 +36,7 @@ public interface EventService {
      * Elimina un registro de la base de datos con un objeto que tiene el id de parametro
      * @param id parametro de un registro a borrar
      */
-    void deleteById(Long id) throws EventException;
+    Event deleteById(Long id) throws EventException;
     /**
      * Guarda un objeto de tipo EventRequest
      * @param event recupera un objeto de tipo EventRequest

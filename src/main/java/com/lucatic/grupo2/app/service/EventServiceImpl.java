@@ -12,6 +12,7 @@ import com.lucatic.grupo2.app.model.dto.RoomRequest;
 import com.lucatic.grupo2.app.repository.EventRepository;
 import com.lucatic.grupo2.app.repository.EventRoomRepository;
 import com.lucatic.grupo2.app.repository.RoomRepository;
+
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,10 +125,13 @@ public class EventServiceImpl implements EventService {
 	 * @param id recibe un id de un objeto a borrar
 	 */
 	@Override
-	public void deleteById(Long id) throws EventException {
+	public Event deleteById(Long id) throws EventException {
 		if (id == null)
 			throw new EventException("IlegalArgumentException: id de evento a borrar es nulo. ");
+		Event event = eventRepository.findById(id).orElseThrow(() -> new EventException("Evento no éxiste para borrar"));
+
 		eventRepository.deleteById(id);
+		return event;
 	}
 
 	/**
