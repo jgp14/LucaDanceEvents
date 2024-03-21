@@ -57,6 +57,7 @@ public class EventAdapter {
 		eventResponse.setEndDate(event.getEndDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		eventResponse.setTimeOpen(event.getTimeOpen().format(DateTimeFormatter.ofPattern("HH:mm")));
 		eventResponse.setRules(event.getRules());
+		eventResponse.setPrice(event.getPrice().toString());
 
 		List<RoomResponse> roomResponses = new ArrayList<>();
 		for (EventRoom er : event.getEventRooms()) {
@@ -137,6 +138,7 @@ public class EventAdapter {
 				event.getLongDescription(), 
 				event.getPhoto(),
 				event.getRules(),
+				event.getPrice().toString(),
 				event.getInitDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 				,event.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
 				event.getTimeOpen().format(DateTimeFormatter.ofPattern("HH:mm")),

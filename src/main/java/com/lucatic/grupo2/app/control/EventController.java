@@ -25,9 +25,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -116,28 +118,28 @@ class EventController {
 			@ApiResponse(responseCode = "500", description = "Error genérico listando eventos", content = @Content)
 
 	})
-	/*@GetMapping("/all")
-	public ResponseEntity<?> listAll() throws EmptyListException {
-
-		try {
-			List<Event> events = eventService.findAll();
-			List<EventResponseWithError> eventsResponseWithError = events.stream()
-					.map(e -> eventAdapter.toEventResponseWithError(e)).collect(Collectors.toList());
-
-			LOGGER.info("Find all success");
-			return ResponseEntity.ok(eventsResponseWithError);
-
-		} catch (EmptyListException e) {
-			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());
-			throw e;
-		}
-	}*/
+	/*
+	 * @GetMapping("/all") public ResponseEntity<?> listAll() throws
+	 * EmptyListException {
+	 * 
+	 * try { List<Event> events = eventService.findAll();
+	 * List<EventResponseWithError> eventsResponseWithError = events.stream() .map(e
+	 * -> eventAdapter.toEventResponseWithError(e)).collect(Collectors.toList());
+	 * 
+	 * LOGGER.info("Find all success"); return
+	 * ResponseEntity.ok(eventsResponseWithError);
+	 * 
+	 * } catch (EmptyListException e) {
+	 * LOGGER.warn("Error, it couldn't list any event" + e.getMessage()); throw e; }
+	 * }
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> listAll() throws EmptyListException {
 
 		try {
 			List<Event> events = eventService.findAll();
-			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u)).collect(Collectors.toList());
+			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u))
+					.collect(Collectors.toList());
 			EventResponseWithErrorList eventResponseWithErrorList = new EventResponseWithErrorList();
 			eventResponseWithErrorList.setEventResponse(eventResponses);
 			LOGGER.info("Find all success");
@@ -148,13 +150,13 @@ class EventController {
 			throw e;
 		}
 	}
-	
+
 	/**
-     * Comprueba si un evento existe por su ID.
-     *
-     * @param id ID del evento a comprobar
-     * @return ResponseEntity con el resultado de la comprobación
-     */
+	 * Comprueba si un evento existe por su ID.
+	 *
+	 * @param id ID del evento a comprobar
+	 * @return ResponseEntity con el resultado de la comprobación
+	 */
 	@Operation(summary = "Comprobar si existe evento", description = "Devuelve un true si el evento ya existe y un false si no existe previamente", tags = {
 			"event" })
 	@ApiResponses(value = {
@@ -165,13 +167,78 @@ class EventController {
 	@GetMapping("/exists/{id}")
 	public ResponseEntity<?> eventFindById(@PathVariable Long id) {
 		if (eventService.eventFindById(id)) {
-			LOGGER.info("Event found with id: " +id.toString());
+			LOGGER.info("Event found with id: " + id.toString());
 			return ResponseEntity.ok(eventAdapter.toExitEventResponseWithError(true));
 		} else {
 			LOGGER.info("Event not found");
 			return ResponseEntity.ok(eventAdapter.toExitEventResponseWithError(false));
 		}
 
+	}
+
+	/**
+	 * Modifica un request body de un evento existente en la bdd events
+	 * 
+	 * @param eventRequest Con los datos del Event a modificar
+	 * @param id           ID del evento a modificar
+	 * @return ResponseEntity Con la respuesta de editar del evento
+	 * @throws EventException EventExistException cuando no se edito correctamente.
+	 */
+	@Operation(summary = "Modificar un evento", description = "Modifica un evento de la base de datos", tags = {
+			"event" })
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Evento editado correctamente", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = EventResponseWithError.class)) }),
+
+			@ApiResponse(responseCode = "400", description = "No hay evento encontrado para editar", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Error genérico en edicion de evento", content = @Content)
+
+	})
+	@PutMapping("/edit/{id}")
+	public ResponseEntity<?> update(@RequestBody @Valid EventRequest eventRequest, @PathVariable Long id)
+			throws EventException {
+		try {
+			Event eventUpdated = eventService.update(eventRequest, id);
+			LOGGER.info("Event " + eventUpdated.getName() + " with id " + eventUpdated.getId() + " has been updated");
+			return ResponseEntity.ok(eventAdapter.toEventResponseWithError(eventUpdated));
+		} catch (EventExistException e) {
+			LOGGER.warn("Error putting the event" + e.getMessage());
+			throw e;
+		} catch (EventException e) {
+			LOGGER.warn("Error generico" + e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Elimina un evento existente en la bdd events
+	 * 
+	 * @param id ID del evento a modificar
+	 * @return ResponseEntity Con el id del evento eliminado
+	 * @throws EventException error generico, EventExistException no se encontro
+	 *                        cuando no se elimino correctamente.
+	 */
+	@Operation(summary = "Eliminar un evento", description = "Elimina un evento de la base de datos", tags = {
+			"event" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Evento eliminado correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = EventResponseWithError.class)) }),
+
+			@ApiResponse(responseCode = "400", description = "No hay evento encontrado para eliminar", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Error genérico en borrado de evento", content = @Content)
+
+	})
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> delete(@PathVariable Long id) throws EventException {
+		try {
+			eventService.deleteById(id);
+			return ResponseEntity.ok(id);
+		} catch (EventExistException e) {
+			LOGGER.warn("Error deleting the event" + e.getMessage());
+			throw e;
+		} catch (EventException e) {
+			LOGGER.warn("Error generico" + e.getMessage());
+			throw e;
+		}
 	}
 
 }

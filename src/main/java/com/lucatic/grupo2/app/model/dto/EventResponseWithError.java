@@ -1,5 +1,7 @@
 package com.lucatic.grupo2.app.model.dto;
 
+import java.io.Serializable;
+
 import com.lucatic.grupo2.app.model.Error;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +18,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventResponseWithError {
+public class EventResponseWithError implements Serializable {
+
+	/**
+	 * Atributo de serialVersionUID para Serializable.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Atrubuto Clase eventResponse
