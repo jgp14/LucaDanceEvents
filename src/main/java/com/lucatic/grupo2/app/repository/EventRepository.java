@@ -32,6 +32,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	 * @param roomType nombre del genero de la sala
 	 * @return List<Event> lista de eventos con el mismo tipo de genero.
 	 */
-	@Query("SELECT e FROM Event e JOIN e.rooms r WHERE r.roomType LIKE %:roomType%")
-	List<Event> findEventsByRoomType(@Param("roomType") String roomType);
+	@Query("SELECT e FROM Event e JOIN e.eventRooms r WHERE r.room.roomType LIKE CONCAT('%', ?1, '%')")
+	List<Event> findEventsByRoomType(String roomType);
 }
