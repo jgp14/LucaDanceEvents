@@ -258,7 +258,7 @@ class EventController {
 
 	})
 	@GetMapping("/{name}")
-	public ResponseEntity<?> listEventByName(@Valid @PathVariable String name) throws EventException {
+	public ResponseEntity<?> listEventByName(@PathVariable String name) throws EventException {
 		try {
 			List<Event> events = eventService.findByName(name);
 			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u))
@@ -288,7 +288,7 @@ class EventController {
 
 	})
 	@GetMapping("eventsbyroom/{roomType}")
-	public ResponseEntity<?> listEventsByRoomType(@Valid @PathVariable String roomType) throws EventException {
+	public ResponseEntity<?> listEventsByRoomType(@PathVariable String roomType) throws EventException {
 		try {
 			List<Event> events = eventService.findEventsByRoomType(roomType);
 			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u))
@@ -296,6 +296,22 @@ class EventController {
 			EventResponseWithErrorList eventResponseWithErrorList = new EventResponseWithErrorList();
 			eventResponseWithErrorList.setEventResponse(eventResponses);
 			LOGGER.info("Find all events with roomType: " + roomType);
+			return ResponseEntity.ok(eventResponseWithErrorList);
+		} catch (EmptyListException e) {
+			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());
+			throw e;
+		}
+	}
+
+	@GetMapping("eventsByCity/{city}")
+	public ResponseEntity<?> listEventsByCity(@PathVariable String cityName) throws EventException {
+		try {
+			List<Event> events = eventService.findEventsByCity(cityName);
+			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u))
+					.collect(Collectors.toList());
+			EventResponseWithErrorList eventResponseWithErrorList = new EventResponseWithErrorList();
+			eventResponseWithErrorList.setEventResponse(eventResponses);
+			LOGGER.info("Find all events with roomType: " + cityName);
 			return ResponseEntity.ok(eventResponseWithErrorList);
 		} catch (EmptyListException e) {
 			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());

@@ -34,4 +34,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	 */
 	@Query("SELECT e FROM Event e JOIN e.eventRooms r WHERE r.room.roomType LIKE CONCAT('%', ?1, '%')")
 	List<Event> findEventsByRoomType(String roomType);
+
+	@Query("SELECT e FROM Event e JOIN e.eventRooms r WHERE r.room.city LIKE CONCAT('%', ?1, '%') ")
+	List<Event> findEventByCity(String cityName);
 }

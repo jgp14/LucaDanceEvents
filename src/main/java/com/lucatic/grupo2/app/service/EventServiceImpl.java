@@ -216,4 +216,15 @@ public class EventServiceImpl implements EventService {
 			return events;
 		}
 	}
+
+	@Override
+	public List<Event> findEventsByCity(String cityName) throws EmptyListException {
+		List<Event> events = eventRepository.findEventByCity(cityName);
+		if (events.isEmpty()) {
+			throw new EmptyListException("Lista de eventos vacía");
+		} else {
+			return events;
+		}
+	}
+
 }

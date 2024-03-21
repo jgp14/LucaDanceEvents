@@ -83,4 +83,5 @@ public interface EventService {
 	 */
 	List<Event> findEventsByRoomType(String roomType) throws EmptyListException;
 
+	List<Event> findEventsByCity(String cityName) throws EmptyListException;
 }
