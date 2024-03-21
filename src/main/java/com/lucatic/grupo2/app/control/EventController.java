@@ -243,4 +243,34 @@ class EventController {
 		}
 	}
 
+	/**
+	 * Lista los eventos por nombre de evento guardados en la bbdd
+	 * 
+	 * @return ResponseEntity con el response de eventos
+	 * @throws EmptyListException cuando no devuelve elementos de la lista
+	 */
+	@Operation(summary = "Listar los eventos por nombre", description = "Devuelve un listado los eventos con un nombre especifico", tags = {
+			"event" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Eventos listados con nombre concreto", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EventResponseWithErrorList.class)))),
+			@ApiResponse(responseCode = "404", description = "No hay eventos con ese nombre", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Error genérico listando eventos", content = @Content)
+
+	})
+	@GetMapping("/{name}")
+	public ResponseEntity<?> listEventByName(@Valid @PathVariable String name) throws EventException {
+		try {
+			List<Event> events = eventService.findByName(name);
+			List<EventResponse> eventResponses = events.stream().map(u -> eventAdapter.toEventResponse(u))
+					.collect(Collectors.toList());
+			EventResponseWithErrorList eventResponseWithErrorList = new EventResponseWithErrorList();
+			eventResponseWithErrorList.setEventResponse(eventResponses);
+			LOGGER.info("Find all events with name: " + name);
+			return ResponseEntity.ok(eventResponseWithErrorList);
+		} catch (EmptyListException e) {
+			LOGGER.warn("Error, it couldn't list any event" + e.getMessage());
+			throw e;
+		}
+	}
+
 }

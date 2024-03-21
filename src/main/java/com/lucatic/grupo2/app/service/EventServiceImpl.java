@@ -128,7 +128,8 @@ public class EventServiceImpl implements EventService {
 	public Event deleteById(Long id) throws EventException {
 		if (id == null)
 			throw new EventException("IlegalArgumentException: id de evento a borrar es nulo. ");
-		Event event = eventRepository.findById(id).orElseThrow(() -> new EventException("Evento no éxiste para borrar"));
+		Event event = eventRepository.findById(id)
+				.orElseThrow(() -> new EventException("Evento no éxiste para borrar"));
 
 		eventRepository.deleteById(id);
 		return event;
@@ -175,5 +176,14 @@ public class EventServiceImpl implements EventService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Event> findByName(String name) throws EmptyListException {
+		List<Event> events = eventRepository.findEventByNameContainingIgnoreCase(name);
+		if (events.isEmpty())
+			throw new EmptyListException("Lista de eventos vacía");
+		else
+			return events;
 	}
 }

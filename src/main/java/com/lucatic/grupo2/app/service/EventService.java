@@ -51,4 +51,6 @@ public interface EventService {
      * @return Event
      */
 	boolean eventFindById(long id);
+	
+	List<Event> findByName(String name) throws EmptyListException;
 }
