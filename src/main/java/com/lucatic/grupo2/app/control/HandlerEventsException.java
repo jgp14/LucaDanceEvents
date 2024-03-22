@@ -5,6 +5,7 @@ import com.lucatic.grupo2.app.exceptions.EventExistException;
 import com.lucatic.grupo2.app.model.Error;
 import com.lucatic.grupo2.app.model.dto.EventResponseWithError;
 
+import com.lucatic.grupo2.app.model.dto.EventResponseWithErrorList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -124,18 +125,18 @@ public class HandlerEventsException {
 	 * @return ResponseEntity con la respuesta del error.
 	 */
 	@ExceptionHandler(EmptyListException.class)
-	public ResponseEntity<EventResponseWithError> errorEventExist(EmptyListException e) {
+	public ResponseEntity<EventResponseWithErrorList> errorEventExist(EmptyListException e) {
 		Error error = new Error();
 		error.setDate(LocalDateTime.now());
 		error.setError("Error la lista está vacía");
 		error.setMessage(e.getMessage());
-		error.setStatus(HttpStatus.BAD_REQUEST.value());
-		EventResponseWithError eventResponseWithError = new EventResponseWithError();
-		eventResponseWithError.setError(error);
-		eventResponseWithError.setErrorBool(true);
+		error.setStatus(HttpStatus.OK.value());
+		EventResponseWithErrorList eventResponseWithErrorList = new EventResponseWithErrorList();
+		eventResponseWithErrorList.setError(error);
+		eventResponseWithErrorList.setErrorBool(true);
 		// return ResponseEntity.internalServerError().body(error);
 		LOGGER.warn(error.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(eventResponseWithError);
+		return ResponseEntity.status(HttpStatus.OK.value()).body(eventResponseWithErrorList	);
 	}
 
 	/**

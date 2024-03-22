@@ -57,7 +57,7 @@ public class EventRoom {
 	 * Atributo Room que recoge la sala y su clave forarena. Esta mapeado @OneToOne
 	 * con limitacion @JsonManagedReference
 	 */
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JsonManagedReference
 	private Room room;
 
